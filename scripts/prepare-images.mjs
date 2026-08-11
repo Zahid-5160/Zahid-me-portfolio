@@ -141,9 +141,14 @@ async function renderPortrait() {
   const meta = await sharp(input).metadata()
   console.log(`  · using ${files[0]} (${meta.width}×${meta.height})`)
 
-  // Render at 1400px wide, which covers a 2x retina display at the size the
-  // portrait is actually shown. Enlarge only if the original is smaller.
+  // The portrait is shown in a box about 340px wide, so ~700px covers a
+  // retina screen. We cap at 1400px but never enlarge past the original:
+  // stretching a photo beyond its real pixels only makes it look soft.
   const targetWidth = 1400
+
+  if (meta.width && meta.width < targetWidth) {
+    console.log(`  · keeping native width (${meta.width}px) — no upscaling`)
+  }
 
   const pipeline = sharp(input)
     .rotate() // respect the camera's orientation tag
@@ -151,7 +156,7 @@ async function renderPortrait() {
       width: targetWidth,
       kernel: 'lanczos3',
       fit: 'inside',
-      withoutEnlargement: false,
+      withoutEnlargement: true,
     })
     // A measured sharpen — enough to recover crispness lost in resampling,
     // not so much that it looks over-processed.
@@ -196,13 +201,13 @@ async function renderShareCard() {
 
       <rect width="1200" height="630" fill="url(#veil)"/>
 
-      <rect x="80" y="150" width="54" height="3" fill="#74b4b9"/>
+      <rect x="80" y="150" width="54" height="3" fill="#c9ccd2"/>
 
       <text x="80" y="238" font-family="${fonts}" font-size="66" font-weight="700"
             fill="#ffffff" letter-spacing="-1.5">Mohammed Zahid</text>
 
       <text x="80" y="300" font-family="${fonts}" font-size="31" font-weight="500"
-            fill="#a8c9cc">Web Developer &#183; Data Analyst</text>
+            fill="#c2c5ca">Web Developer &#183; Data Analyst</text>
 
       <text x="80" y="382" font-family="${fonts}" font-size="25" font-weight="400"
             fill="#9fb0b6">I build fast, reliable websites — and turn raw</text>
@@ -210,7 +215,7 @@ async function renderShareCard() {
             fill="#9fb0b6">data into clear answers.</text>
 
       <text x="80" y="522" font-family="${fonts}" font-size="21" font-weight="600"
-            fill="#74b4b9" letter-spacing="1.6">JAVASCRIPT &#183; REACT &#183; PYTHON &#183; SQL &#183; MONGODB</text>
+            fill="#adb1b8" letter-spacing="1.6">JAVASCRIPT &#183; REACT &#183; PYTHON &#183; SQL &#183; MONGODB</text>
     </svg>
   `)
 

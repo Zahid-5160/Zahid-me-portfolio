@@ -76,7 +76,7 @@ const FRAGMENT_SHADER = /* glsl */ `
   }
 `
 
-export default function SceneBackground({ className, color = '#8fc4c9' }) {
+export default function SceneBackground({ className, color = '#c9ccd2' }) {
   const mountRef = useRef(null)
 
   useEffect(() => {

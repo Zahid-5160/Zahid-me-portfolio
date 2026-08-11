@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { navLinks, profile } from '../data/content.js'
+import { emailHref, emailLinkProps } from '../lib/email.js'
 import { Github, Linkedin, Mail, MapPin, Phone } from './Icons.jsx'
 
 export default function Footer() {
@@ -36,7 +37,7 @@ export default function Footer() {
             <h2 className="footer__col-title">Contact</h2>
             <ul className="footer__list">
               <li>
-                <a className="footer__link" href={`mailto:${profile.email}`}>
+                <a className="footer__link" href={emailHref()} {...emailLinkProps}>
                   <Mail size={15} />
                   {profile.email}
                 </a>

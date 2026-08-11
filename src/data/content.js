@@ -32,6 +32,22 @@ export const profile = {
   github: 'https://github.com/Zahid-5160',
   linkedin: 'https://www.linkedin.com/in/zahid-mohd/',
 
+  // WHAT THE EMAIL BUTTONS DO
+  //
+  //   'gmail'  → opens Gmail's compose window in a new browser tab,
+  //              already addressed to you. (current setting)
+  //
+  //   'mailto' → opens whatever mail program the visitor has installed.
+  //              On most Windows PCs that is Outlook.
+  //
+  // Note: with 'gmail', a visitor who is not signed in to a Google account
+  // is asked to sign in first. Your email address is always shown as plain
+  // text in the footer, so anyone can copy it instead.
+  emailMode: 'gmail',
+
+  // The subject line filled in for them
+  emailSubject: 'Hello Zahid — from your portfolio',
+
   // YOUR CV / RESUME  (currently switched off)
   //
   // To turn on the "CV" download button:
@@ -279,6 +295,6 @@ export const navLinks = [
    8. SITE ADDRESS  —  update after you deploy
    ------------------------------------------------------------------------
    Used for SEO tags and the sitemap. Change this to your real address once
-   the site is live (for example 'https://zahid-portfolio.vercel.app').
+   the site is live (for example 'https://zahid-5160.github.io/portfolio').
    ------------------------------------------------------------------------ */
-export const siteUrl = 'https://zahid-portfolio.vercel.app'
+export const siteUrl = 'https://zahid-5160.github.io/portfolio'

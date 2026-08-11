@@ -12,7 +12,7 @@
   inset-inline: 0;
   height: 2px;
   z-index: 120;
-  background: linear-gradient(90deg, var(--accent), var(--gold));
+  background: linear-gradient(90deg, #0c0d0f, var(--metal), #ffffff);
   transform-origin: 0 50%;
   pointer-events: none;
 }
@@ -21,21 +21,35 @@
    Header / navigation
    ------------------------------------------------------------------------ */
 
+/* A solid black bar, not a translucent one. It stays black in both themes —
+   it is the one fixed, branded element on the page. */
 .nav {
   position: sticky;
   inset-block-start: 0;
   z-index: 100;
-  background: var(--surface-glass);
-  backdrop-filter: saturate(1.5) blur(14px);
-  -webkit-backdrop-filter: saturate(1.5) blur(14px);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--t-med) var(--ease-out),
-              box-shadow var(--t-med) var(--ease-out);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  transition: box-shadow var(--t-med) var(--ease-out);
 }
 
 .nav--scrolled {
-  border-bottom-color: var(--line);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* A hairline of silver along the very top edge */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22) 22%,
+    rgba(255, 255, 255, 0.22) 78%,
+    transparent
+  );
 }
 
 .nav__inner {
@@ -52,54 +66,65 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sp-3);
-  color: var(--ink);
+  color: var(--nav-text-hi);
   min-width: 0;
 }
 
 .brand:hover {
-  color: var(--ink);
+  color: var(--nav-text-hi);
 }
 
+/* Brushed-silver monogram tile */
 .brand__mark {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   flex: 0 0 auto;
   border-radius: var(--r-md);
-  background: var(--accent);
-  color: var(--on-accent);
+  background: linear-gradient(145deg, #fdfdfd, #b9bcc2 55%, #8e9198);
+  color: #0c0d0f;
   font-family: var(--font-head);
   font-size: var(--fs-sm);
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   transition: transform var(--t-med) var(--ease-out);
 }
 
 .brand:hover .brand__mark {
-  transform: rotate(-6deg) scale(1.05);
+  transform: translateY(-1px) scale(1.04);
 }
 
 .brand__text {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  line-height: 1.25;
   min-width: 0;
 }
 
 .brand__name {
   font-family: var(--font-head);
-  font-size: var(--fs-base);
+  font-size: var(--fs-md);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   white-space: nowrap;
 }
 
 .brand__role {
-  font-size: 0.6875rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+  color: var(--nav-text);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+/* The footer reuses .brand, but there it sits on a light background */
+.footer .brand {
+  color: var(--ink);
+}
+
+.footer .brand__role {
+  color: var(--muted);
 }
 
 /* --- Desktop links --- */
@@ -107,42 +132,43 @@
 .nav__links {
   display: flex;
   align-items: center;
-  gap: var(--sp-1);
+  gap: clamp(0.25rem, 1.6vw, 1.25rem);
   list-style: none;
   padding: 0;
 }
 
+/* Uppercase, letter-spaced labels with a silver rule that slides between
+   them — a cleaner signal than a filled pill on a black bar. */
 .nav__link {
   position: relative;
-  /* Own stacking context so the sliding pill (z-index -1) stays inside the
-     link instead of disappearing behind the header background. */
-  isolation: isolate;
   display: block;
-  padding: 0.5rem 0.875rem;
-  border-radius: var(--r-pill);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--text);
+  padding: 0.5rem 0.25rem;
+  font-family: var(--font-head);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+  color: var(--nav-text);
   white-space: nowrap;
   transition: color var(--t-fast) var(--ease-out);
 }
 
 .nav__link:hover {
-  color: var(--ink);
+  color: var(--nav-text-hi);
 }
 
 .nav__link--active {
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--nav-text-hi);
 }
 
-/* The sliding pill that follows the active link */
+/* The sliding underline that follows the active link */
 .nav__pill {
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--accent-soft);
-  border-radius: var(--r-pill);
+  inset-inline: 0;
+  inset-block-end: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ffffff, #9ea2a9);
 }
 
 .nav__actions {
@@ -173,6 +199,36 @@
   background: var(--accent-soft);
 }
 
+/* Icon buttons sitting on the black bar */
+.nav .icon-btn {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.20);
+  color: var(--nav-text);
+}
+
+.nav .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.42);
+  color: var(--nav-text-hi);
+}
+
+.nav .icon-btn:focus-visible {
+  outline-color: #ffffff;
+}
+
+/* The header call-to-action: an outlined silver button */
+.btn--nav {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.32);
+  color: #ffffff;
+}
+
+.btn--nav:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0c0d0f;
+}
+
 .nav__menu-btn {
   display: none;
 }
@@ -181,8 +237,8 @@
 
 .nav__mobile {
   overflow: hidden;
-  border-top: 1px solid var(--line);
-  background: var(--surface);
+  border-top: 1px solid var(--nav-border);
+  background: var(--nav-bg);
 }
 
 .nav__mobile-list {
@@ -196,18 +252,20 @@
 
 .nav__mobile-link {
   display: block;
-  padding: 0.75rem var(--sp-3);
+  padding: 0.8125rem var(--sp-3);
   border-radius: var(--r-md);
   font-family: var(--font-head);
-  font-size: var(--fs-md);
-  font-weight: 500;
-  color: var(--text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+  color: var(--nav-text);
 }
 
 .nav__mobile-link--active {
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--nav-text-hi);
+  box-shadow: inset 2px 0 0 #ffffff;
 }
 
 .nav__mobile-cta {
@@ -396,10 +454,14 @@
   color: var(--accent);
 }
 
-.tag--gold {
-  background: var(--gold-soft);
-  border-color: transparent;
-  color: var(--gold);
+.tag--metal {
+  background: var(--metal-soft);
+  border-color: var(--line);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  font-weight: 600;
 }
 
 /* ---------------------------------------------------------------------------
@@ -529,7 +591,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #10171a;
+  background: #0c0d0f;
 }
 
 /* <picture> is only a wrapper for the responsive sources — it must not add a

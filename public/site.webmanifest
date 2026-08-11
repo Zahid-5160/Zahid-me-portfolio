@@ -4,8 +4,8 @@
   "description": "Portfolio of Mohammed Zahid, full-stack web developer and data analyst.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f7f6f3",
-  "theme_color": "#28565c",
+  "background_color": "#f2f2f3",
+  "theme_color": "#0c0d0f",
   "icons": [
     {
       "src": "./favicon.svg",

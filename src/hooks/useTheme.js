@@ -33,7 +33,7 @@ export function useTheme() {
     document.documentElement.setAttribute('data-theme', theme)
 
     const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#13181b' : '#f7f6f3')
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0e0f11' : '#f2f2f3')
   }, [theme])
 
   const toggle = useCallback(() => {

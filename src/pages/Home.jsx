@@ -8,6 +8,7 @@ import PageTransition from '../components/PageTransition.jsx'
 import Portrait from '../components/Portrait.jsx'
 import Reveal from '../components/Reveal.jsx'
 import { asset } from '../lib/asset.js'
+import { emailHref, emailLinkProps } from '../lib/email.js'
 import { ArrowRight, Download, Github, Linkedin, MapPin } from '../components/Icons.jsx'
 
 /* The 3D layer is decorative, so it is fetched separately and arrives a
@@ -82,7 +83,7 @@ export default function Home() {
                 View my work
                 <ArrowRight className="btn__icon btn__icon--arrow" />
               </Link>
-              <a className="btn btn--on-photo" href={`mailto:${profile.email}`}>
+              <a className="btn btn--on-photo" href={emailHref()} {...emailLinkProps}>
                 Contact me
               </a>
               {profile.resume && (
@@ -184,7 +185,7 @@ export default function Home() {
                   <div className="fact">
                     <span className="fact__label">Email</span>
                     <span className="fact__value">
-                      <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                      <a href={emailHref()} {...emailLinkProps}>{profile.email}</a>
                     </span>
                   </div>
                 </div>
@@ -223,7 +224,7 @@ export default function Home() {
               The fastest way to reach me is email — I reply to everything.
             </p>
             <div className="btn-row" style={{ justifyContent: 'center' }}>
-              <a className="btn btn--primary" href={`mailto:${profile.email}`}>
+              <a className="btn btn--primary" href={emailHref()} {...emailLinkProps}>
                 Email me
                 <ArrowRight className="btn__icon btn__icon--arrow" />
               </a>

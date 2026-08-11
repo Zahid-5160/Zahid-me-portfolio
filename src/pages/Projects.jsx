@@ -102,7 +102,7 @@ export default function Projects() {
                         <h2 className="project-card__title">{project.title}</h2>
                         <p className="project-card__blurb">{project.blurb}</p>
                       </div>
-                      <span className="tag tag--gold project-card__cat">
+                      <span className="tag tag--metal project-card__cat">
                         {project.category}
                       </span>
                     </div>

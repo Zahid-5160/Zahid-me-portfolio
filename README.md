@@ -108,17 +108,20 @@ Full instructions are in `public/images/profile/README.txt`.
 
 ---
 
-## Adding your CV
+## Your CV
 
-1. Copy your CV PDF into the `public/` folder.
-2. Open `src/data/content.js` and change this line to match the file name:
+This is already set up. `public/resume_zahid.pdf` is on the site, and the **CV**
+button on the home page downloads it.
 
-   ```js
-   resume: '/Mohammed-Zahid-CV.pdf',
-   ```
+To swap in a newer copy, replace that file keeping the same name. To use a
+different name, put the PDF in `public/` and update this line in
+`src/data/content.js`:
 
-A **CV** download button then appears on the home page. It is switched off right now
-(`resume: null`) so the site never links to a file that is not there.
+```js
+resume: 'resume_zahid.pdf',
+```
+
+Set it to `null` to hide the button.
 
 ---
 
@@ -170,63 +173,67 @@ two commands GitHub shows you. Copy the finished address into `repo`.
 
 ## Putting the site online
 
-The site is a set of plain files, so it can go on any free host. Both options below
-give you **free HTTPS** (the padlock in the browser) automatically.
+The site publishes itself from GitHub. There is no second service to sign up for.
 
-### First, put the code on GitHub
+**The live address is:**
 
-```bash
-git init
-git add .
-git commit -m "My portfolio website"
-git branch -M main
-git remote add origin https://github.com/Zahid-5160/zahid-portfolio.git
-git push -u origin main
+```
+https://zahid-5160.github.io/portfolio/
 ```
 
-(Create the empty `zahid-portfolio` repository at [github.com/new](https://github.com/new) first.)
+### How it works
 
-### Then publish it — Vercel (recommended)
+`.github/workflows/deploy.yml` tells GitHub to build the site and publish it every
+time you push. So the whole routine is:
 
-1. Go to [vercel.com](https://vercel.com) and sign in **with your GitHub account**.
-2. Click **Add New → Project** and pick your `zahid-portfolio` repository.
-3. Vercel reads `vercel.json` in this repo and fills in the settings itself. Just
-   click **Deploy**.
-4. About a minute later you get an address like
-   `https://zahid-portfolio.vercel.app`.
+```bash
+git add .
+git commit -m "describe what you changed"
+git push
+```
 
-Every time you push a change to GitHub, the live site updates by itself.
+Wait about two minutes, then refresh the live address. That is it.
 
-### Or — Netlify
+### One-time setup
 
-1. Go to [netlify.com](https://netlify.com) and sign in with GitHub.
-2. **Add new site → Import an existing project**, pick the repository.
-3. Netlify reads `netlify.toml` and fills in the settings. Click **Deploy**.
+This only has to be done once, in the browser:
 
-### After it is live
+1. Open the repository on GitHub
+2. **Settings → Pages**
+3. Under **Source**, choose **GitHub Actions**
 
-Open `src/data/content.js` and change `siteUrl` at the bottom to your real address.
-Then do the same in `index.html`, `public/robots.txt` and `public/sitemap.xml` —
-search for `zahid-portfolio.vercel.app` and replace it. This makes Google and
-LinkedIn show the right link and preview picture.
+You can watch the build happen on the **Actions** tab. A green tick means it is live.
+
+### If you rename the repository
+
+The address changes to match, and the build adjusts to it automatically — nothing to
+edit. But do update these so Google and LinkedIn point at the right place: `siteUrl`
+in `src/data/content.js`, and the addresses in `index.html`, `public/robots.txt` and
+`public/sitemap.xml`.
+
+Renaming the repository to **`Zahid-5160.github.io`** would serve the site from
+`https://zahid-5160.github.io/` with no `/portfolio` on the end — a tidier link for a
+CV or LinkedIn profile.
+
+### Other hosts
+
+`vercel.json` and `netlify.toml` are included, so the site also works on
+[Vercel](https://vercel.com) or [Netlify](https://netlify.com) if you ever want to
+move. Sign in with GitHub, pick the repository, and the settings fill themselves in.
 
 ---
 
-## About the free address, HTTPS and privacy
+## About the address, HTTPS and privacy
 
-**The free address.** Vercel gives you `something.vercel.app`; Netlify gives you
-`something.netlify.app`. You choose the first part in the dashboard.
+**A note on naming.** `zahid_portfolio` cannot be used as a web address, because
+underscores (`_`) are not allowed in website names. Use a hyphen instead:
 
-**One thing to note about the name you asked for:** `zahid_portfolio` cannot be used
-as a web address, because underscores (`_`) are not allowed in website names. Use a
-hyphen instead:
+- ✅ `zahid-portfolio`
+- ✅ `zahidportfolio`
+- ❌ `zahid_portfolio`
 
-- ✅ `zahid-portfolio.vercel.app`
-- ✅ `zahidportfolio.vercel.app`
-- ❌ `zahid_portfolio.vercel.app`
-
-**HTTPS.** Both hosts turn on HTTPS automatically and renew the certificate for you.
-There is nothing to set up and nothing to pay.
+**HTTPS.** GitHub Pages turns on HTTPS automatically and renews the certificate for
+you. There is nothing to set up and nothing to pay.
 
 **Your IP address.** A website like this one never reveals your personal IP address.
 The files are copied onto the host's servers around the world, and visitors only ever

@@ -2,68 +2,77 @@
    DESIGN TOKENS
    Every colour, size and spacing value the site uses is defined once, here.
    Change a value here and it updates everywhere.
+
+   Palette: black and greyish silver. No colour hues at all — hierarchy comes
+   from contrast and from the metallic mid-greys, which keeps it corporate.
    ========================================================================== */
 
 :root {
-  /* --- Neutral base: warm off-white. Not stark white, not grey. ---------- */
-  --bg:            #f7f6f3;
-  --bg-alt:        #efede8;
+  /* --- Neutral base: cool silver-greys ---------------------------------- */
+  --bg:            #f2f2f3;
+  --bg-alt:        #e7e7e9;
   --surface:       #ffffff;
-  --surface-2:     #fbfaf8;
-  --surface-glass: rgba(255, 255, 255, 0.72);
+  --surface-2:     #f8f8f9;
+  --surface-glass: rgba(255, 255, 255, 0.76);
 
-  --line:          #e3e0d9;
-  --line-strong:   #cec9bf;
+  --line:          #dbdbde;
+  --line-strong:   #bfc0c5;
 
-  /* --- Text: soft charcoal rather than pure black ------------------------ */
-  --ink:           #15191e;
-  --text:          #454f59;
-  --muted:         #78818c;
+  /* --- Text: near-black through to mid silver --------------------------- */
+  --ink:           #0c0d0f;
+  --text:          #3e4045;
+  --muted:         #76787e;
 
-  /* --- Accent: deep petrol teal. Corporate, calm, never neon. ------------ */
-  --accent:        #28565c;
-  --accent-hover:  #1c4045;
-  --accent-soft:   #e4eeee;
-  --accent-line:   #b9d2d3;
+  /* --- Accent: black. Used for primary buttons and emphasis. ------------ */
+  --accent:        #16171a;
+  --accent-hover:  #000000;
+  --accent-soft:   #e6e6e9;
+  --accent-line:   #c2c3c8;
   --on-accent:     #ffffff;
 
-  /* --- Secondary accent: muted bronze, used sparingly ------------------- */
-  --gold:          #a3814a;
-  --gold-soft:     #f2ece1;
+  /* --- Metal: the greyish silver, for small highlights ------------------ */
+  --metal:         #85888f;
+  --metal-soft:    #ececed;
+
+  /* --- The black bar across the top ------------------------------------- */
+  --nav-bg:        #0c0d0f;
+  --nav-border:    #24262a;
+  --nav-text:      #a5a8ae;
+  --nav-text-hi:   #ffffff;
 
   /* --- Overlays used on top of the building photographs -----------------
-     Kept deliberately strong: the glass-tower photograph is bright, and
-     body text over it has to stay comfortably readable. */
-  --veil-strong:   rgba(13, 20, 24, 0.84);
-  --veil-soft:     rgba(13, 20, 24, 0.64);
-  --on-photo:      #f4f6f6;
-  --on-photo-mute: #ccd5d8;
+     Kept deliberately strong: the photographs are bright, and body text
+     over them has to stay comfortably readable. */
+  --veil-strong:   rgba(10, 11, 13, 0.86);
+  --veil-soft:     rgba(10, 11, 13, 0.66);
+  --on-photo:      #f5f5f6;
+  --on-photo-mute: #cdced2;
 
-  --shadow-sm: 0 1px 2px rgba(21, 25, 30, 0.05), 0 1px 3px rgba(21, 25, 30, 0.04);
-  --shadow-md: 0 4px 12px rgba(21, 25, 30, 0.06), 0 2px 4px rgba(21, 25, 30, 0.04);
-  --shadow-lg: 0 18px 40px rgba(21, 25, 30, 0.10), 0 4px 12px rgba(21, 25, 30, 0.05);
+  --shadow-sm: 0 1px 2px rgba(12, 13, 15, 0.06), 0 1px 3px rgba(12, 13, 15, 0.04);
+  --shadow-md: 0 4px 12px rgba(12, 13, 15, 0.07), 0 2px 4px rgba(12, 13, 15, 0.04);
+  --shadow-lg: 0 18px 40px rgba(12, 13, 15, 0.12), 0 4px 12px rgba(12, 13, 15, 0.06);
 
   /* --- Type ------------------------------------------------------------- */
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
 
-  /* Deliberately small-to-medium, as requested */
-  --fs-xs:   0.75rem;     /* 12px */
-  --fs-sm:   0.8125rem;   /* 13px */
-  --fs-base: 0.9375rem;   /* 15px */
-  --fs-md:   1rem;        /* 16px */
-  --fs-lg:   1.0625rem;   /* 17px */
-  --fs-xl:   clamp(1.125rem, 1.6vw, 1.3125rem);
-  --fs-2xl:  clamp(1.375rem, 2.6vw, 1.75rem);
-  --fs-3xl:  clamp(1.625rem, 3.6vw, 2.375rem);
-  --fs-hero: clamp(2rem, 5.4vw, 3.5rem);
+  --fs-xs:   0.8125rem;   /* 13px */
+  --fs-sm:   0.9375rem;   /* 15px */
+  --fs-base: 1.0625rem;   /* 17px */
+  --fs-md:   1.125rem;    /* 18px */
+  --fs-lg:   1.25rem;     /* 20px */
+  --fs-xl:   clamp(1.3125rem, 1.9vw, 1.5rem);
+  --fs-2xl:  clamp(1.625rem, 3vw, 2.125rem);
+  --fs-3xl:  clamp(2rem, 4.2vw, 2.875rem);
+  --fs-hero: clamp(2.5rem, 6.2vw, 4.25rem);
 
-  --lh-tight: 1.15;
+  --lh-tight: 1.14;
   --lh-snug:  1.35;
-  --lh-body:  1.7;
+  --lh-body:  1.68;
 
-  --tracking-eyebrow: 0.14em;
+  --tracking-eyebrow: 0.16em;
+  --tracking-nav: 0.11em;
 
   /* --- Spacing ---------------------------------------------------------- */
   --sp-1: 0.25rem;
@@ -76,20 +85,20 @@
   --sp-8: 4rem;
   --sp-9: 5.5rem;
 
-  --section-y: clamp(3.5rem, 7vw, 6rem);
+  --section-y: clamp(3.75rem, 7vw, 6.5rem);
 
   /* --- Shape ------------------------------------------------------------ */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 22px;
+  --r-sm: 5px;
+  --r-md: 8px;
+  --r-lg: 14px;
+  --r-xl: 20px;
   --r-pill: 999px;
 
   /* --- Layout ----------------------------------------------------------- */
-  --container: 1140px;
-  --container-wide: 1320px;
+  --container: 1160px;
+  --container-wide: 1340px;
   --gutter: clamp(1.125rem, 4vw, 2.5rem);
-  --nav-h: 68px;
+  --nav-h: 74px;
 
   /* --- Motion ----------------------------------------------------------- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -100,41 +109,46 @@
 }
 
 /* ============================================================================
-   DARK THEME — a soft slate, never pure black.
-   Applied when the user picks dark, or follows their system setting.
+   DARK THEME — deep charcoal with silver text. Never pure black on black.
    ========================================================================== */
 
 :root[data-theme='dark'] {
-  --bg:            #13181b;
-  --bg-alt:        #171d21;
-  --surface:       #1a2126;
-  --surface-2:     #1f272c;
-  --surface-glass: rgba(26, 33, 38, 0.74);
+  --bg:            #0e0f11;
+  --bg-alt:        #131417;
+  --surface:       #17191c;
+  --surface-2:     #1d2024;
+  --surface-glass: rgba(23, 25, 28, 0.78);
 
-  --line:          #2a343a;
-  --line-strong:   #3c484f;
+  --line:          #262a2f;
+  --line-strong:   #3a3f45;
 
-  --ink:           #eef1f2;
-  --text:          #b0bbc2;
-  --muted:         #838f98;
+  --ink:           #f1f2f3;
+  --text:          #adb1b7;
+  --muted:         #7d8188;
 
-  --accent:        #74b4b9;
-  --accent-hover:  #92c9cd;
-  --accent-soft:   #1d2e31;
-  --accent-line:   #315055;
-  --on-accent:     #0e1518;
+  /* On dark, the "accent" flips to silver-white so buttons still read */
+  --accent:        #e9eaec;
+  --accent-hover:  #ffffff;
+  --accent-soft:   #1f2226;
+  --accent-line:   #3a3f45;
+  --on-accent:     #0c0d0f;
 
-  --gold:          #c6a370;
-  --gold-soft:     #262117;
+  --metal:         #9ea2a9;
+  --metal-soft:    #1f2226;
 
-  --veil-strong:   rgba(8, 12, 14, 0.86);
-  --veil-soft:     rgba(8, 12, 14, 0.68);
+  --nav-bg:        #08090a;
+  --nav-border:    #1e2124;
+  --nav-text:      #9da1a7;
+  --nav-text-hi:   #ffffff;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.34);
-  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.44);
+  --veil-strong:   rgba(6, 7, 8, 0.88);
+  --veil-soft:     rgba(6, 7, 8, 0.70);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.34);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.48);
 }
 
 /* Note: the site deliberately opens in the light theme above rather than
-   following the operating system, because the light neutral palette is the
+   following the operating system, because the light silver palette is the
    intended look. Dark is opt-in through the toggle in the header. */

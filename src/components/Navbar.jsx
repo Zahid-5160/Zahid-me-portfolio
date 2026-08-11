@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { navLinks, profile } from '../data/content.js'
+import { emailHref, emailLinkProps } from '../lib/email.js'
 import ThemeToggle from './ThemeToggle.jsx'
 import { ArrowRight, Close, Menu } from './Icons.jsx'
 
@@ -78,8 +79,9 @@ export default function Navbar() {
           <ThemeToggle />
 
           <a
-            className="btn btn--primary btn--sm nav__desktop-cta"
-            href={`mailto:${profile.email}`}
+            className="btn btn--nav btn--sm nav__desktop-cta"
+            href={emailHref()}
+            {...emailLinkProps}
           >
             Get in touch
             <ArrowRight size={14} className="btn__icon btn__icon--arrow" />
@@ -126,7 +128,7 @@ export default function Navbar() {
               </ul>
 
               <div className="nav__mobile-cta">
-                <a className="btn btn--primary" href={`mailto:${profile.email}`}>
+                <a className="btn btn--nav" href={emailHref()} {...emailLinkProps}>
                   Get in touch
                   <ArrowRight size={14} className="btn__icon btn__icon--arrow" />
                 </a>

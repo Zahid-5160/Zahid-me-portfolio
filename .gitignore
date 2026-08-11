@@ -5,6 +5,12 @@ node_modules/
 dist/
 .vite/
 
+# The 4K master photographs. `npm run images` downloads them again if they
+# are missing, so there is no need to store 7 MB of them in the repository.
+# (Your own portrait in public/images/profile/source/ IS kept — that one
+# cannot be re-downloaded.)
+assets/source/
+
 # logs
 *.log
 npm-debug.log*
