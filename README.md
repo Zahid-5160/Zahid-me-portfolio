@@ -178,7 +178,7 @@ The site publishes itself from GitHub. There is no second service to sign up for
 **The live address is:**
 
 ```
-https://zahid-5160.github.io/portfolio/
+https://zahid-5160.github.io/zahid-2002-portfolio/
 ```
 
 ### How it works

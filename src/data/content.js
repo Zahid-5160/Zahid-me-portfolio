@@ -295,6 +295,6 @@ export const navLinks = [
    8. SITE ADDRESS  —  update after you deploy
    ------------------------------------------------------------------------
    Used for SEO tags and the sitemap. Change this to your real address once
-   the site is live (for example 'https://zahid-5160.github.io/portfolio').
+   the site is live (for example 'https://zahid-5160.github.io/zahid-2002-portfolio').
    ------------------------------------------------------------------------ */
-export const siteUrl = 'https://zahid-5160.github.io/portfolio'
+export const siteUrl = 'https://zahid-5160.github.io/zahid-2002-portfolio'
