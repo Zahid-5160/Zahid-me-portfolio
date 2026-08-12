@@ -70,7 +70,7 @@ export const profile = {
    nothing breaks.
    ------------------------------------------------------------------------ */
 export const photo = {
-  src: '/images/profile/zahid.jpg',
+  src: '/images/profile/portrait.jpg',
   alt: 'Portrait of Mohammed Zahid',
 }
 

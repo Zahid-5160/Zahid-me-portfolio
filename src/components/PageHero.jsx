@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
 import Backdrop from './Backdrop.jsx'
+import SplitText from './SplitText.jsx'
 
 /**
  * The compact photographic header used on the Skills, Experience and
@@ -42,9 +43,9 @@ export default function PageHero({ index, eyebrow, title, subtitle, image }) {
         <motion.span variants={item} className="eyebrow eyebrow--on-photo">
           {eyebrow}
         </motion.span>
-        <motion.h1 variants={item} className="page-hero__title">
-          {title}
-        </motion.h1>
+        <h1 className="page-hero__title">
+          <SplitText text={title} delay={0.14} />
+        </h1>
         <motion.p variants={item} className="page-hero__sub">
           {subtitle}
         </motion.p>

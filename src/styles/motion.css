@@ -1,0 +1,534 @@
+/* ============================================================================
+   MOTION
+   Every animated flourish on the site lives here, so it can all be tuned —
+   or switched off — from one place.
+
+   Anything that moves on its own is written with CSS transforms and opacity
+   only. Those two properties are handled by the graphics card, so the
+   animations stay smooth without slowing the page down.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Scroll progress — the silver line that fills as you scroll
+   ------------------------------------------------------------------------ */
+
+.scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 2px;
+  z-index: 130;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #6e727a, #ffffff);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Split-text headings — letters rise out of a hidden strip
+   ------------------------------------------------------------------------ */
+
+.split__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* A space between words, since the words themselves are inline-blocks */
+.split__word:not(:last-child)::after {
+  content: ' ';
+  display: inline-block;
+  width: 0.28em;
+}
+
+.split__mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Room for letter tails (g, y, p) so they are not clipped */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.split__char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons — a silver glint sweeps across on hover
+   ------------------------------------------------------------------------ */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -120%;
+  width: 55%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.38),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: none;
+}
+
+.btn:hover::after {
+  animation: btn-glint 720ms var(--ease-out);
+}
+
+@keyframes btn-glint {
+  to { inset-inline-start: 140%; }
+}
+
+/* The dark buttons need a subtler glint than the outlined ones */
+.btn--ghost::after,
+.btn--nav::after {
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+}
+
+.btn {
+  transition: background var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              transform var(--t-med) var(--ease-out),
+              box-shadow var(--t-med) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------------
+   Navigation links — the label slides up and a copy takes its place
+   ------------------------------------------------------------------------ */
+
+.nav__link-swap {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.nav__link-swap span {
+  display: block;
+  transition: transform 420ms var(--ease-out);
+}
+
+/* The second copy waits directly underneath, out of sight */
+.nav__link-swap span:last-child {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+}
+
+.nav__link:hover .nav__link-swap span {
+  transform: translateY(-100%);
+}
+
+/* ---------------------------------------------------------------------------
+   Round icon buttons and the monogram
+   ------------------------------------------------------------------------ */
+
+.icon-btn,
+.brand__mark {
+  border-radius: 50%;
+}
+
+.icon-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--t-med) var(--ease-out),
+              background var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out);
+}
+
+.icon-btn:hover {
+  transform: translateY(-1px) scale(1.06);
+}
+
+.icon-btn:active {
+  transform: scale(0.96);
+}
+
+/* A slow silver sheen that drifts across the monogram */
+.brand__mark {
+  position: relative;
+  overflow: hidden;
+}
+
+.brand__mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  animation: mark-sheen 5.5s var(--ease-in-out) infinite;
+  pointer-events: none;
+}
+
+@keyframes mark-sheen {
+  0%, 55%  { transform: translateX(-120%); }
+  80%, 100% { transform: translateX(120%); }
+}
+
+/* ---------------------------------------------------------------------------
+   Cards — 3D tilt highlight
+   ------------------------------------------------------------------------ */
+
+.tilt__glare {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: opacity var(--t-med) var(--ease-out);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* A hairline that races along the top edge of a card on hover */
+.card--hover::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 1px;
+  z-index: 3;
+  background: linear-gradient(90deg, transparent, var(--ink), transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity var(--t-fast) var(--ease-out);
+}
+
+.card--hover:hover::before {
+  opacity: 0.55;
+  animation: card-edge 900ms var(--ease-out);
+}
+
+@keyframes card-edge {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ---------------------------------------------------------------------------
+   Tags — lift slightly, one after another
+   ------------------------------------------------------------------------ */
+
+.tag {
+  transition: transform var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              background var(--t-fast) var(--ease-out);
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------------------------
+   Timeline — the line draws itself downwards as it scrolls into view
+   ------------------------------------------------------------------------ */
+
+.timeline::before {
+  transform-origin: 50% 0;
+  animation: draw-line 1.1s var(--ease-out) both;
+}
+
+@keyframes draw-line {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.timeline__dot {
+  transition: transform var(--t-med) var(--ease-out),
+              box-shadow var(--t-med) var(--ease-out);
+}
+
+.timeline__item:hover .timeline__dot {
+  transform: scale(1.25);
+}
+
+/* A soft pulse on the most recent role */
+.timeline__item:first-child .timeline__dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  animation: dot-pulse 2.6s var(--ease-out) infinite;
+}
+
+@keyframes dot-pulse {
+  0%   { opacity: 0.55; transform: scale(0.7); }
+  70%  { opacity: 0;    transform: scale(1.5); }
+  100% { opacity: 0;    transform: scale(1.5); }
+}
+
+/* ---------------------------------------------------------------------------
+   Portrait — silver ring and a slow sheen across the photograph
+   ------------------------------------------------------------------------ */
+
+.portrait__ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: calc(var(--r-xl) + 10px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+  animation: ring-breathe 6s var(--ease-in-out) infinite;
+}
+
+@keyframes ring-breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.55; }
+  50%      { transform: scale(1.02); opacity: 0.9; }
+}
+
+.portrait__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.10) 50%,
+    transparent 60%
+  );
+  transform: translateX(-110%);
+  animation: portrait-sheen 7s var(--ease-in-out) infinite;
+}
+
+@keyframes portrait-sheen {
+  0%, 62%   { transform: translateX(-110%); }
+  88%, 100% { transform: translateX(110%); }
+}
+
+.portrait__chip {
+  animation: chip-in 700ms var(--ease-out) 900ms both;
+}
+
+@keyframes chip-in {
+  from { opacity: 0; transform: translate(-50%, 14px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Stats — the panel each number sits in
+   ------------------------------------------------------------------------ */
+
+.stat {
+  position: relative;
+  transition: background var(--t-med) var(--ease-out);
+}
+
+.stat::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 20%;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transition: transform var(--t-med) var(--ease-out);
+}
+
+.stat:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll cue — a dot that keeps sliding down the little line
+   ------------------------------------------------------------------------ */
+
+.hero__cue-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__cue-line::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 12px;
+  background: #ffffff;
+  animation: cue-slide 2.1s var(--ease-in-out) infinite;
+}
+
+@keyframes cue-slide {
+  0%   { transform: translateY(-14px); opacity: 0; }
+  35%  { opacity: 1; }
+  100% { transform: translateY(36px); opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Filter pills and links
+   ------------------------------------------------------------------------ */
+
+.filter {
+  transition: transform var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out);
+}
+
+.filter:hover {
+  transform: translateY(-2px);
+}
+
+/* Footer links grow a small underline from the left */
+.footer__link {
+  position: relative;
+}
+
+.footer__link::after {
+  content: '';
+  position: absolute;
+  inset-block-end: -2px;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--t-med) var(--ease-out);
+}
+
+.footer__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------------------------------------------------------------------------
+   Photographs — drained of colour to match the black and silver palette
+   ------------------------------------------------------------------------
+   The architectural photographs carry their own blue and teal casts, which
+   fight the monochrome theme. Removing the colour keeps everything in the
+   same family. The portrait keeps its colour — a face should look like a
+   face — and only settles to full colour on hover.
+   ------------------------------------------------------------------------ */
+
+.hero__photo,
+.page-hero__img,
+.photo-band__img {
+  filter: grayscale(1) contrast(1.06) brightness(0.98);
+}
+
+/* The portrait is shown exactly as photographed — no colour filter of any
+   kind. Only a gentle zoom on hover, which does not alter the image. */
+.portrait__img {
+  transition: transform 900ms var(--ease-out);
+}
+
+.portrait:hover .portrait__img {
+  transform: scale(1.03);
+}
+
+/* ---------------------------------------------------------------------------
+   Layout fixes for the wrappers the animations add
+   ------------------------------------------------------------------------
+   Magnetic and Tilt each wrap their contents in an extra element. These
+   rules make sure that extra element does not disturb the layout it sits in.
+   ------------------------------------------------------------------------ */
+
+/* Magnetic wrappers inside a row of buttons become the flex items */
+.btn-row > span {
+  display: inline-flex;
+}
+
+@media (max-width: 560px) {
+  .btn-row > span {
+    flex: 1 1 auto;
+  }
+
+  .btn-row > span > .btn {
+    width: 100%;
+  }
+}
+
+/* The portrait's tilt wrapper takes over the sizing from .portrait */
+.portrait-tilt {
+  width: min(100%, 340px);
+}
+
+.portrait-tilt > .portrait {
+  width: 100%;
+}
+
+@media (max-width: 980px) {
+  .portrait-tilt {
+    width: min(100%, 280px);
+  }
+}
+
+/* Cards that tilt need their reveal wrapper to fill the grid cell, so
+   neighbouring cards in a row stay the same height. */
+.skill-grid > div,
+.strength-grid > div,
+.edu-grid > div {
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Page transition — a silver wipe passes over as pages change
+   ------------------------------------------------------------------------ */
+
+.page-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 115;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  background: linear-gradient(180deg, #16181c, #0a0b0d);
+}
+
+/* ---------------------------------------------------------------------------
+   Respect the visitor's choice.
+   If their device asks for reduced motion, every looping or decorative
+   animation above stops. The site still works exactly the same.
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress,
+  .brand__mark::after,
+  .portrait__ring,
+  .portrait__sheen,
+  .portrait__chip,
+  .hero__cue-line::after,
+  .timeline::before,
+  .timeline__item:first-child .timeline__dot::after,
+  .card--hover:hover::before,
+  .btn:hover::after {
+    animation: none !important;
+  }
+
+  .btn:hover,
+  .icon-btn:hover,
+  .tag:hover,
+  .filter:hover {
+    transform: none !important;
+  }
+}

@@ -5,6 +5,7 @@ import { profile, projects } from '../data/content.js'
 import PageHero from '../components/PageHero.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Reveal from '../components/Reveal.jsx'
+import Tilt from '../components/Tilt.jsx'
 import { formatUpdated, useGithubRepos } from '../hooks/useGithubRepos.js'
 import {
   ArrowRight,
@@ -91,12 +92,8 @@ export default function Projects() {
                 const updated = formatUpdated(meta?.updated)
 
                 return (
-                  <Reveal
-                    key={project.id}
-                    as="article"
-                    delay={index * 0.06}
-                    className="card card--hover project-card"
-                  >
+                  <Reveal key={project.id} delay={index * 0.06}>
+                    <Tilt as="article" className="card card--hover project-card">
                     <div className="project-card__head">
                       <div>
                         <h2 className="project-card__title">{project.title}</h2>
@@ -172,6 +169,7 @@ export default function Projects() {
                         </span>
                       )}
                     </div>
+                    </Tilt>
                   </Reveal>
                 )
               })}

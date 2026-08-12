@@ -156,7 +156,10 @@
 
 .portrait__media {
   position: relative;
-  aspect-ratio: 4 / 5;
+  /* The photo is very tall (610 x 1295), so the frame is kept tall too or
+     most of it would be cropped away. At 5/8 about 75% of the picture shows.
+     Lower the number (1 / 2) to reveal more; raise it (4 / 5) to crop in. */
+  aspect-ratio: 5 / 8;
   border-radius: var(--r-xl);
   overflow: hidden;
   background: linear-gradient(150deg, #2c2f33, #17191c);
@@ -167,7 +170,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
+  /* Sits the visible window right at the top of the photo, so the whole of
+     the hair is in shot. Everything cropped comes off the bottom instead.
+     Raise this number to slide the view down; lower it to slide it up. */
+  object-position: center 2%;
 }
 
 /* Shown when no photo file has been added yet */
@@ -766,6 +772,12 @@
   .exp-card__head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  /* The company line wraps on narrow screens, which would leave the
+     separator dangling at the end of a line. */
+  .exp-card__sep {
+    display: none;
   }
 }
 

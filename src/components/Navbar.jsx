@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { navLinks, profile } from '../data/content.js'
 import { emailHref, emailLinkProps } from '../lib/email.js'
+import Magnetic from './Magnetic.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 import { ArrowRight, Close, Menu } from './Icons.jsx'
 
@@ -66,7 +67,12 @@ export default function Navbar() {
                           transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                         />
                       )}
-                      {link.label}
+                      {/* Two copies of the label: on hover the first slides
+                          up out of view as the second rises to replace it. */}
+                      <span className="nav__link-swap">
+                        <span>{link.label}</span>
+                        <span aria-hidden>{link.label}</span>
+                      </span>
                     </>
                   )}
                 </NavLink>
@@ -78,14 +84,21 @@ export default function Navbar() {
         <div className="nav__actions">
           <ThemeToggle />
 
-          <a
-            className="btn btn--nav btn--sm nav__desktop-cta"
-            href={emailHref()}
-            {...emailLinkProps}
-          >
-            Get in touch
-            <ArrowRight size={14} className="btn__icon btn__icon--arrow" />
-          </a>
+          {/* The hide-on-mobile class sits on a plain wrapper, not on
+              Magnetic — Magnetic sets its own inline display, which would
+              override the rule that hides this on small screens. */}
+          <div className="nav__desktop-cta">
+            <Magnetic strength={0.25}>
+              <a
+                className="btn btn--nav btn--sm"
+                href={emailHref()}
+                {...emailLinkProps}
+              >
+                Get in touch
+                <ArrowRight size={14} className="btn__icon btn__icon--arrow" />
+              </a>
+            </Magnetic>
+          </div>
 
           <button
             type="button"

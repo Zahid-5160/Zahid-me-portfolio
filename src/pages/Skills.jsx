@@ -4,6 +4,7 @@ import { skillGroups, strengths } from '../data/content.js'
 import PageHero from '../components/PageHero.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Reveal from '../components/Reveal.jsx'
+import Tilt from '../components/Tilt.jsx'
 import { ArrowRight } from '../components/Icons.jsx'
 
 export default function Skills() {
@@ -37,11 +38,11 @@ export default function Skills() {
           <div className="strength-grid">
             {strengths.map((strength, index) => (
               <Reveal key={strength.title} delay={index * 0.08}>
-                <article className="card card--hover" style={{ height: '100%' }}>
+                <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
                   <span className="card__index" aria-hidden>{index + 1}</span>
                   <h3 className="card__title">{strength.title}</h3>
                   <p className="card__body">{strength.body}</p>
-                </article>
+                </Tilt>
               </Reveal>
             ))}
           </div>
@@ -64,7 +65,7 @@ export default function Skills() {
           <div className="skill-grid">
             {skillGroups.map((group, index) => (
               <Reveal key={group.id} delay={index * 0.06}>
-                <article className="card card--hover" style={{ height: '100%' }}>
+                <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
                   <div className="skill-card__head">
                     <h3 className="card__title">{group.title}</h3>
                     <span className="skill-card__count">
@@ -81,7 +82,7 @@ export default function Skills() {
                       <li className="tag" key={item}>{item}</li>
                     ))}
                   </ul>
-                </article>
+                </Tilt>
               </Reveal>
             ))}
           </div>

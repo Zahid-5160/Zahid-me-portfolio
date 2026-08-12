@@ -20,7 +20,7 @@
       photo looks as crisp as its original pixels allow.
    ========================================================================== */
 
-import { mkdir, readdir, writeFile, access } from 'node:fs/promises'
+import { mkdir, readdir, writeFile, access, copyFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -141,38 +141,16 @@ async function renderPortrait() {
   const meta = await sharp(input).metadata()
   console.log(`  · using ${files[0]} (${meta.width}×${meta.height})`)
 
-  // The portrait is shown in a box about 340px wide, so ~700px covers a
-  // retina screen. We cap at 1400px but never enlarge past the original:
-  // stretching a photo beyond its real pixels only makes it look soft.
-  const targetWidth = 1400
+  // The portrait is copied across EXACTLY as it is — same pixels, same
+  // file, byte for byte. No resizing, no sharpening, no re-encoding.
+  //
+  // (Earlier this resized and sharpened the photo. That is switched off on
+  // purpose: the original is wanted untouched. If you ever want the tidy-up
+  // back, the sharp pipeline would go here instead of the copy below.)
+  await copyFile(input, path.join(profileOutDir, 'portrait.jpg'))
 
-  if (meta.width && meta.width < targetWidth) {
-    console.log(`  · keeping native width (${meta.width}px) — no upscaling`)
-  }
-
-  const pipeline = sharp(input)
-    .rotate() // respect the camera's orientation tag
-    .resize({
-      width: targetWidth,
-      kernel: 'lanczos3',
-      fit: 'inside',
-      withoutEnlargement: true,
-    })
-    // A measured sharpen — enough to recover crispness lost in resampling,
-    // not so much that it looks over-processed.
-    .sharpen({ sigma: 0.8, m1: 0.6, m2: 2.2 })
-
-  await pipeline
-    .clone()
-    .jpeg({ quality: 88, mozjpeg: true, progressive: true, chromaSubsampling: '4:4:4' })
-    .toFile(path.join(profileOutDir, 'zahid.jpg'))
-
-  await pipeline
-    .clone()
-    .webp({ quality: 88, effort: 6 })
-    .toFile(path.join(profileOutDir, 'zahid.webp'))
-
-  console.log('  ✓ portrait written to public/images/profile/zahid.jpg (+ .webp)')
+  console.log('  ✓ copied unchanged to public/images/profile/portrait.jpg')
+  console.log('    (no resizing, sharpening or re-encoding applied)')
 }
 
 /* --- Step 4: the social share card ---------------------------------------

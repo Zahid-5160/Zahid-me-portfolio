@@ -4,9 +4,13 @@ import { motion, useReducedMotion } from 'framer-motion'
 
 import { about, profile } from '../data/content.js'
 import Backdrop from '../components/Backdrop.jsx'
+import CountUp from '../components/CountUp.jsx'
+import Magnetic from '../components/Magnetic.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Portrait from '../components/Portrait.jsx'
 import Reveal from '../components/Reveal.jsx'
+import SplitText from '../components/SplitText.jsx'
+import Tilt from '../components/Tilt.jsx'
 import { asset } from '../lib/asset.js'
 import { emailHref, emailLinkProps } from '../lib/email.js'
 import { ArrowRight, Download, Github, Linkedin, MapPin } from '../components/Icons.jsx'
@@ -64,9 +68,9 @@ export default function Home() {
               {profile.availability}
             </motion.span>
 
-            <motion.h1 variants={item} className="hero__title">
-              {profile.name}
-            </motion.h1>
+            <h1 className="hero__title">
+              <SplitText text={profile.name} delay={0.18} />
+            </h1>
 
             <motion.p variants={item} className="hero__role">
               <span>Web Developer</span>
@@ -79,18 +83,24 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={item} className="btn-row">
-              <Link className="btn btn--primary" to="/projects">
-                View my work
-                <ArrowRight className="btn__icon btn__icon--arrow" />
-              </Link>
-              <a className="btn btn--on-photo" href={emailHref()} {...emailLinkProps}>
-                Contact me
-              </a>
-              {profile.resume && (
-                <a className="btn btn--on-photo" href={asset(profile.resume)} download>
-                  <Download size={15} className="btn__icon" />
-                  CV
+              <Magnetic>
+                <Link className="btn btn--primary" to="/projects">
+                  View my work
+                  <ArrowRight className="btn__icon btn__icon--arrow" />
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <a className="btn btn--on-photo" href={emailHref()} {...emailLinkProps}>
+                  Contact me
                 </a>
+              </Magnetic>
+              {profile.resume && (
+                <Magnetic>
+                  <a className="btn btn--on-photo" href={asset(profile.resume)} download>
+                    <Download size={15} className="btn__icon" />
+                    CV
+                  </a>
+                </Magnetic>
               )}
             </motion.div>
 
@@ -128,7 +138,9 @@ export default function Home() {
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Portrait />
+            <Tilt className="portrait-tilt" max={7} glare={false}>
+              <Portrait />
+            </Tilt>
           </motion.div>
         </div>
 
@@ -145,7 +157,7 @@ export default function Home() {
             {about.stats.map((stat) => (
               <div className="stat" key={stat.label}>
                 <span className="stat__value">
-                  {stat.value}
+                  <CountUp value={stat.value} />
                   {stat.suffix && <span className="stat__suffix">{stat.suffix}</span>}
                 </span>
                 <span className="stat__label">{stat.label}</span>

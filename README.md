@@ -10,70 +10,240 @@ messy data, and Matplotlib and Seaborn to turn it into charts that answer a ques
 I spent 11 months at Arsuma Solutions building and looking after real client websites.
 I hold a B.E. in Computer Science (7.6 CGPA, 2025).
 
-This repository holds my personal portfolio website.
-
 - **Email:** [mdzahidzahu@gmail.com](mailto:mdzahidzahu@gmail.com)
 - **GitHub:** [github.com/Zahid-5160](https://github.com/Zahid-5160)
 - **LinkedIn:** [linkedin.com/in/zahid-mohd](https://www.linkedin.com/in/zahid-mohd/)
 
+> **This README is written for anyone**, technical or not. It explains what the site is,
+> what each tool does, the ideas behind the code, and what every single file is for.
+
 ---
 
-## What this website is
+## 1. What this website is
 
-A small, fast website with four pages:
+Four pages, in a black and silver theme:
 
 | Page | What is on it |
 |---|---|
-| **Home** | Introduction, a short bio, and how to contact me |
+| **Home** | Introduction, short bio, key numbers, contact |
 | **Skills** | The tools I use, grouped by what they are for |
-| **Experience** | My work history, education and awards |
+| **Experience** | Work history, education and awards |
 | **Projects** | The things I have built |
 
-It is a **single-page application**, which means when you click a menu item the new page
-fades in straight away instead of reloading the whole browser window. There is also a
-moving 3D layer behind the picture on the home page.
+**Live address:** https://zahid-5160.github.io/zahid-2002-portfolio/
 
-### Built with
-
-- **React** + **Vite** — the framework and the build tool
-- **React Router** — moves between the four pages
-- **Framer Motion** — the fade and slide animations
-- **Three.js** — the moving 3D dots behind the home page picture
-- Plain, hand-written **CSS** — no CSS framework
-
----
-
-## Running it on your computer
+### Running it on your own computer
 
 You need [Node.js](https://nodejs.org) version 20 or newer.
 
 ```bash
-npm install     # download the pieces the site needs (only needed once)
-npm run dev     # start the site
+npm install     # download the pieces the site needs (once)
+npm run dev     # start the site, then open the address it prints
 ```
 
-Then open the address it prints, usually <http://localhost:5173>.
-
-Other commands:
-
-```bash
-npm run build     # make the finished files, ready to publish (goes into dist/)
-npm run preview   # look at those finished files before publishing
-npm run images    # prepare the photographs (see below)
-```
+| Command | What it does |
+|---|---|
+| `npm run dev` | Runs the site while you work on it. Changes appear instantly. |
+| `npm run build` | Packs everything into a finished `dist/` folder, ready to publish. |
+| `npm run preview` | Shows you that finished folder before publishing. |
+| `npm run images` | Prepares the photographs (see section 6). |
 
 ---
 
-## Changing the words on the site
+## 2. The technologies, in plain words
 
-**Everything you can read on the website lives in one file:**
+| Tool | What it actually does here |
+|---|---|
+| **React** | Lets the page be built out of small reusable pieces ("components") instead of one giant file. Change the piece once and it updates everywhere it is used. |
+| **Vite** | The workshop. While I work it shows changes instantly; when I am done it squashes everything into small, fast files. |
+| **React Router** | Gives each page its own web address (`/skills`, `/projects`) even though the browser never actually reloads. That is why moving between pages feels instant. |
+| **Framer Motion** | The animation engine. Handles the sliding, fading and springy movements. |
+| **Three.js** | Draws the slowly drifting field of dots behind the home page. It is real 3D, rendered by the graphics card. |
+| **Plain CSS** | All the styling is hand-written. No Bootstrap or Tailwind — that keeps the site small and the look entirely my own. |
+| **Sharp** | Runs only on my machine, never on the website. It resizes and sharpens the photographs. |
+| **GitHub Actions** | GitHub's robot. Every time I upload a change, it rebuilds the site and publishes it. |
 
-```
-src/data/content.js
-```
+---
 
-Open it, change the text between the quote marks, and save. The site updates itself.
-You do not need to know React to do this.
+## 3. The ideas behind the code
+
+Short explanations of the concepts a developer would look for.
+
+**Components.** The site is assembled from small building blocks — a button, a card, the
+menu. Each is written once and reused. The four pages are mostly arrangements of blocks.
+
+**Single-page application.** Normally clicking a link makes the browser throw the whole
+page away and fetch a new one. Here the site swaps out just the middle part. Nothing
+flashes, and the animation between pages is possible because the old page is still there
+while the new one arrives.
+
+**State.** Things the site has to remember while you are on it — which menu tab is open,
+which project filter you picked, whether you chose dark mode. When a remembered thing
+changes, the affected part of the screen redraws itself.
+
+**Props.** How one block passes information to another. The Projects page hands each
+card its title and description; the card does not know or care where they came from.
+
+**Design tokens.** Every colour, text size and spacing value is written down once in a
+single file (`tokens.css`) and referred to by name everywhere else. Changing the accent
+colour is a one-line edit, not a hunt through thousands of lines.
+
+**Responsive images.** Each background photo exists in five sizes up to 4K. The browser
+is shown the list and picks the one that fits the screen. A phone downloads about 40 KB
+where a 4K monitor gets the full picture.
+
+**Code splitting.** The 3D library is large. Rather than making everyone wait for it, the
+text and photo appear first and the 3D layer arrives a moment later. The Skills,
+Experience and Projects pages are also only downloaded when someone actually opens them.
+
+**Graceful fallbacks.** Every part that could fail has a plan B. No photo yet? Show a
+neat initials badge. GitHub not responding? Hide the extra repo details. No 3D support?
+Show the photograph on its own. The visitor never sees something broken.
+
+**Accessibility.** The whole site can be used with the Tab key, every focused item shows
+a clear outline, there is a "Skip to content" link, and images carry text descriptions
+for screen readers. If someone's device asks for reduced motion, every decorative
+animation switches off.
+
+**Smooth animation.** Animations only ever change two things: position and transparency.
+Those two are handled by the graphics card rather than the main processor, which is why
+the movement stays smooth instead of stuttering.
+
+---
+
+## 4. What every file does
+
+### Root folder
+
+| File | What it is for |
+|---|---|
+| `index.html` | The empty shell the browser loads first. Holds the page title and the preview details used when the link is shared. |
+| `package.json` | The project's ID card: its name, the `npm run` commands, and the list of outside code it needs. |
+| `package-lock.json` | Records the exact versions installed, so the site builds identically on any machine. Never edited by hand. |
+| `vite.config.js` | Build settings. Splits the big 3D library into its own file and sets the address prefix for GitHub Pages. |
+| `vercel.json` | Settings if the site is hosted on Vercel: security rules, caching, and page routing. |
+| `netlify.toml` | The same, for Netlify. Harmless to keep both. |
+| `.gitignore` | The list of things Git should ignore — installed packages, build output, the 7 MB master photos. |
+| `README.md` | This file. |
+
+### `.github/workflows/`
+
+| File | What it is for |
+|---|---|
+| `deploy.yml` | The instructions GitHub's robot follows: install, build, and publish the site. Runs automatically on every upload. |
+
+### `scripts/`
+
+| File | What it is for |
+|---|---|
+| `prepare-images.mjs` | Run by `npm run images`. Downloads the 4K building photos, makes five sizes of each, builds the social share card, and prepares your portrait. |
+
+### `public/` — files copied to the website exactly as they are
+
+| File | What it is for |
+|---|---|
+| `favicon.svg` | The small round icon in the browser tab. |
+| `theme-init.js` | Runs before the page is drawn to apply light or dark mode, so there is no flash of the wrong colours. |
+| `robots.txt` | Tells search engines they may list the site, and where the sitemap is. |
+| `sitemap.xml` | The list of the four pages, for search engines. |
+| `site.webmanifest` | Details used if someone saves the site to a phone home screen. |
+| `_redirects` | Netlify's version of "send every address to index.html". |
+| `og-image.jpg` | The picture that appears when the link is shared on LinkedIn or WhatsApp. |
+| `resume_zahid.pdf` | Your CV. The **CV** button downloads this. |
+| `images/*.webp`, `images/*-fallback.jpg` | The four building photographs, each in five sizes. |
+| `images/profile/portrait.jpg` | Your prepared portrait, used in the hero. |
+| `images/profile/source/` | Your original photo. The script reads from here; this file never goes on the website. |
+| `images/profile/README.txt` | Instructions for replacing your photo. |
+
+### `src/` — the application itself
+
+| File | What it is for |
+|---|---|
+| `main.jsx` | The starting point. Attaches the site to the page and switches on page-to-page navigation. |
+| `App.jsx` | The map of the site: which address shows which page, plus the two progress bars. |
+
+### `src/data/`
+
+| File | What it is for |
+|---|---|
+| `content.js` | **Every word on the website.** Your name, bio, skills, jobs, projects, contact details. This is the only file you need to edit to update the site. |
+
+### `src/lib/` — small helpers
+
+| File | What it is for |
+|---|---|
+| `asset.js` | Builds correct web addresses for files in `public/`, so images still work when the site is served from a sub-folder. |
+| `email.js` | Decides whether the email buttons open Gmail in a tab or the visitor's own mail program. |
+
+### `src/hooks/` — reusable behaviour
+
+| File | What it is for |
+|---|---|
+| `useTheme.js` | Handles light and dark mode, and remembers the visitor's choice on their own device. |
+| `useGithubRepos.js` | Fetches a project's language, star count and last-updated date live from GitHub. If GitHub is slow, the details are quietly skipped. |
+
+### `src/components/` — the reusable building blocks
+
+**Structure**
+
+| File | What it is for |
+|---|---|
+| `Layout.jsx` | The frame every page sits inside: header on top, content in the middle, footer at the bottom. |
+| `Navbar.jsx` | The black bar across the top — logo, menu, theme button, "Get in touch". |
+| `Footer.jsx` | The bottom section with links and contact details. |
+| `PageHero.jsx` | The photo banner at the top of Skills, Experience and Projects. |
+
+**Content pieces**
+
+| File | What it is for |
+|---|---|
+| `Backdrop.jsx` | A full-width background photo that automatically picks the right size for the screen. |
+| `Portrait.jsx` | Your photo. Retries once by itself if it fails to load, and shows an initials badge only if that also fails. |
+| `Icons.jsx` | Every small line icon on the site, drawn in code rather than downloaded. |
+| `ThemeToggle.jsx` | The round sun/moon button that switches light and dark. |
+| `SceneBackground.jsx` | The moving 3D dots behind the home page. Stops itself when the tab is hidden or scrolled past. |
+
+**Movement**
+
+| File | What it is for |
+|---|---|
+| `PageTransition.jsx` | The animation when you move between pages, plus setting the browser tab title. |
+| `RouteProgress.jsx` | The thin line that sweeps across the top when a new page opens. |
+| `ScrollProgress.jsx` | The silver line that fills up as you scroll down. |
+| `ScrollToTop.jsx` | Makes a new page start at the top instead of half-scrolled. |
+| `Reveal.jsx` | Fades things gently upward as they scroll into view. |
+| `SplitText.jsx` | Reveals a heading one letter at a time. |
+| `CountUp.jsx` | Counts the numbers on the home page up from zero. |
+| `Magnetic.jsx` | Makes a button lean towards the mouse pointer, then spring back. |
+| `Tilt.jsx` | Tips a card slightly in 3D and moves a highlight under the cursor. |
+
+### `src/pages/` — the four pages
+
+| File | What it is for |
+|---|---|
+| `Home.jsx` | Hero, key numbers, about section, closing contact band. |
+| `Skills.jsx` | Three strengths, then the full toolkit grouped into cards. |
+| `Experience.jsx` | Work timeline, education, and the award. |
+| `Projects.jsx` | Filterable project cards with live GitHub details. |
+| `NotFound.jsx` | The friendly page shown if someone types a wrong address. |
+
+### `src/styles/` — the look
+
+| File | What it is for |
+|---|---|
+| `index.css` | Loads the fonts and the five stylesheets below, in order. |
+| `tokens.css` | **Every colour, text size and spacing value, defined once.** Change the look from here. |
+| `base.css` | Resets browser defaults and sets the basic typography. |
+| `components.css` | Styling for the menu, buttons, cards, tags and footer. |
+| `pages.css` | Layouts specific to individual pages. |
+| `motion.css` | **Every animation on the site**, including the switch that turns them all off for reduced motion. |
+
+---
+
+## 5. Changing the words
+
+Everything you can read on the site lives in **`src/data/content.js`**. Change the text
+between the quote marks, save, and the site updates itself. No React knowledge needed.
 
 Three rules so nothing breaks:
 
@@ -83,39 +253,28 @@ Three rules so nothing breaks:
 
 ---
 
-## Adding your photo
+## 6. Changing your photo
 
-1. Put your photo in this folder (create the `source` folder if it is not there):
+1. Put your photo in `public/images/profile/source/`
+2. Run `npm run images`
 
-   ```
-   public/images/profile/source/
-   ```
+That creates `public/images/profile/portrait.jpg`, which the site picks up automatically.
 
-2. Run:
+> If there is more than one file in that folder, the script uses the first one
+> alphabetically. Keep just the photo you want.
 
-   ```bash
-   npm run images
-   ```
-
-Until you do this, the site shows a clean **MZ** badge instead. Nothing looks broken.
-
-Full instructions are in `public/images/profile/README.txt`.
-
-> Worth knowing: making a photo bigger cannot add detail the camera never captured.
-> The script resamples cleanly and sharpens carefully, so the photo looks as crisp as
-> its original pixels allow. Start with the largest original you have — not a
-> screenshot or a WhatsApp copy.
+**Worth knowing:** enlarging a photo cannot add detail the camera never captured. The
+script resizes with a high-quality filter, sharpens carefully, and never stretches a
+photo beyond its real pixels. Start with your largest original — not a screenshot or a
+WhatsApp copy.
 
 ---
 
-## Your CV
+## 7. Changing your CV
 
-This is already set up. `public/resume_zahid.pdf` is on the site, and the **CV**
-button on the home page downloads it.
-
-To swap in a newer copy, replace that file keeping the same name. To use a
-different name, put the PDF in `public/` and update this line in
-`src/data/content.js`:
+Already set up. `public/resume_zahid.pdf` is on the site and the **CV** button downloads
+it. To use a newer copy, replace that file keeping the same name. To use a different
+name, put the PDF in `public/` and update this line in `content.js`:
 
 ```js
 resume: 'resume_zahid.pdf',
@@ -125,12 +284,11 @@ Set it to `null` to hide the button.
 
 ---
 
-## Adding projects from GitHub
+## 8. Adding projects from GitHub
 
-**You do not upload your code to this website.** Your code stays on GitHub. This site
-just links to it.
+**Your code stays on GitHub. This site only links to it** — you never upload code here.
 
-Open `src/data/content.js`, find the `projects` list, and paste your links:
+In `content.js`, find the `projects` list and fill in the two link fields:
 
 ```js
 {
@@ -141,50 +299,24 @@ Open `src/data/content.js`, find the `projects` list, and paste your links:
   bullets: [ 'What you did...', 'What you found...' ],
   tech: ['Python', 'Pandas'],
 
-  repo: 'https://github.com/Zahid-5160/your-repo-name',   // ← paste the GitHub link
-  demo: 'https://your-live-site.com',                     // ← paste the live link
+  repo: 'https://github.com/Zahid-5160/your-repo-name',   // ← the GitHub link
+  demo: 'https://your-live-site.com',                     // ← the live link
 },
 ```
 
-- **`repo`** — the GitHub address of the project. A **View code** button appears.
-  The site then also reads that repository live and shows its main language, star
-  count and when you last worked on it. If the repository is private or GitHub is
-  slow, those extra details are simply left out and nothing looks broken.
-- **`demo`** — the address of the live website, if it is online. A **Visit site**
-  button appears.
-- Use `null` for either one if it does not apply.
+- **`repo`** — adds a **View code** button, and the card then shows that repository's
+  language, stars and last-updated date, read live from GitHub.
+- **`demo`** — adds a **Visit site** button.
+- Use `null` for either if it does not apply.
 
-To add a **brand new project**, copy one whole block from `{` to `},` and change the
-details. Give it an `id` no other project uses.
-
-**If your project is not on GitHub yet:**
-
-```bash
-cd your-project-folder
-git init
-git add .
-git commit -m "First commit"
-```
-
-Then make an empty repository on [github.com/new](https://github.com/new) and run the
-two commands GitHub shows you. Copy the finished address into `repo`.
+To add a new project, copy one whole block from `{` to `},` and give it an `id` no other
+project uses.
 
 ---
 
-## Putting the site online
+## 9. Publishing
 
-The site publishes itself from GitHub. There is no second service to sign up for.
-
-**The live address is:**
-
-```
-https://zahid-5160.github.io/zahid-2002-portfolio/
-```
-
-### How it works
-
-`.github/workflows/deploy.yml` tells GitHub to build the site and publish it every
-time you push. So the whole routine is:
+The site publishes itself. There is no second service to sign up for.
 
 ```bash
 git add .
@@ -192,108 +324,50 @@ git commit -m "describe what you changed"
 git push
 ```
 
-Wait about two minutes, then refresh the live address. That is it.
+Wait about two minutes, then refresh the live address.
 
-### One-time setup
+**One-time setup**, in the browser: repository → **Settings → Pages** → under **Source**
+choose **GitHub Actions**. You can watch progress on the **Actions** tab; a green tick
+means it is live.
 
-This only has to be done once, in the browser:
-
-1. Open the repository on GitHub
-2. **Settings → Pages**
-3. Under **Source**, choose **GitHub Actions**
-
-You can watch the build happen on the **Actions** tab. A green tick means it is live.
-
-### If you rename the repository
-
-The address changes to match, and the build adjusts to it automatically — nothing to
-edit. But do update these so Google and LinkedIn point at the right place: `siteUrl`
-in `src/data/content.js`, and the addresses in `index.html`, `public/robots.txt` and
-`public/sitemap.xml`.
-
-Renaming the repository to **`Zahid-5160.github.io`** would serve the site from
-`https://zahid-5160.github.io/` with no `/portfolio` on the end — a tidier link for a
-CV or LinkedIn profile.
-
-### Other hosts
-
-`vercel.json` and `netlify.toml` are included, so the site also works on
-[Vercel](https://vercel.com) or [Netlify](https://netlify.com) if you ever want to
-move. Sign in with GitHub, pick the repository, and the settings fill themselves in.
+If you rename the repository the address changes to match, and the build adjusts by
+itself. Only remember to update the address in `content.js`, `index.html`,
+`public/robots.txt` and `public/sitemap.xml` so Google and LinkedIn point to the right
+place.
 
 ---
 
-## About the address, HTTPS and privacy
+## 10. Address, HTTPS and privacy
 
-**A note on naming.** `zahid_portfolio` cannot be used as a web address, because
-underscores (`_`) are not allowed in website names. Use a hyphen instead:
+**Naming.** `zahid_portfolio` cannot be a web address — underscores are not allowed.
+Use a hyphen: `zahid-portfolio`.
 
-- ✅ `zahid-portfolio`
-- ✅ `zahidportfolio`
-- ❌ `zahid_portfolio`
+**HTTPS.** GitHub Pages turns on the padlock automatically and renews it for you.
+Nothing to set up, nothing to pay.
 
-**HTTPS.** GitHub Pages turns on HTTPS automatically and renews the certificate for
-you. There is nothing to set up and nothing to pay.
+**Your IP address.** A site like this never reveals it. The files sit on GitHub's servers
+around the world and visitors only ever connect to those. Your home connection is not
+involved once the site is published.
 
-**Your IP address.** A website like this one never reveals your personal IP address.
-The files are copied onto the host's servers around the world, and visitors only ever
-connect to those. Your home internet connection is not involved at all once the site
-is published.
+**Your visitors' privacy.** The fonts are bundled inside the site rather than loaded from
+Google's servers, so no outside company sees who visits. There are no trackers, no
+analytics and no cookies.
 
-**Your visitors' privacy.** The fonts are bundled inside the site instead of being
-loaded from Google's servers, so no outside company gets to see who visits your page.
-The site also sets strict security headers (see `vercel.json`) and has no trackers,
-no analytics and no cookies.
-
-**If you later buy your own domain** (like `zahidmohd.com`), turn on *WHOIS privacy*
-at the registrar so your name, address and phone number stay off the public record.
-Most registrars include it free.
+**A custom domain later.** If you buy something like `zahidmohd.com`, turn on *WHOIS
+privacy* at the registrar so your name, address and phone number stay off the public
+record. Most registrars include it free.
 
 ---
 
-## Folder guide
+## 11. Picture credits
 
-```
-├── index.html              the page shell, and the Google/LinkedIn preview settings
-├── vercel.json             Vercel settings, including the security headers
-├── netlify.toml            the same, for Netlify
-├── scripts/
-│   └── prepare-images.mjs  prepares the photographs
-├── public/                 files copied to the site exactly as they are
-│   ├── images/             the background photographs, ready in five sizes
-│   └── og-image.jpg        the picture shown when the link is shared
-└── src/
-    ├── data/content.js     ← ALL THE WORDS ON THE SITE ARE HERE
-    ├── pages/              the four pages
-    ├── components/         reusable parts (menu, footer, cards, 3D layer)
-    └── styles/             the colours, sizes and layout
-```
+Architectural photographs from [Unsplash](https://unsplash.com), free to use, no
+attribution required — credited anyway:
 
----
-
-## Notes on how it was built
-
-- **Photographs load at the right size.** Each background is prepared at five widths up
-  to 3840px (4K). A phone downloads about 40 KB; a 4K monitor gets the full picture.
-- **The 3D layer is polite.** It stops when the tab is hidden or scrolled past, keeps
-  off the main thread's way, and does not run at all for visitors whose device asks for
-  reduced motion. It is also downloaded separately, so it never delays the text.
-- **It works without a mouse.** Every link and button can be reached with the Tab key
-  and shows a clear outline, and there is a "Skip to content" link.
-- **Light and dark.** The site opens in its light theme. The sun/moon button switches to
-  dark, and it remembers the choice on that person's own device.
-
----
-
-## Picture credits
-
-Architectural photographs from [Unsplash](https://unsplash.com), used under the
-Unsplash License (free to use, no attribution required — credited here anyway):
-
-- Towers on the home page — [Sean Pollock](https://unsplash.com/photos/PhYq704ffdA)
-- Curved facade on the Skills page — [Joel Filipe](https://unsplash.com/photos/RFDP7_80v5A)
-- Skyline on the Experience page — [Nastuh Abootalebi](https://unsplash.com/photos/yWwob8kwOCk)
-- Glass building on the Projects page — [Sean Pollock](https://unsplash.com/photos/9pClIRXX-vE)
+- Towers (Home) — [Sean Pollock](https://unsplash.com/photos/PhYq704ffdA)
+- Curved facade (Skills) — [Joel Filipe](https://unsplash.com/photos/RFDP7_80v5A)
+- Skyline (Experience) — [Nastuh Abootalebi](https://unsplash.com/photos/yWwob8kwOCk)
+- Glass building (Projects) — [Sean Pollock](https://unsplash.com/photos/9pClIRXX-vE)
 
 ---
 

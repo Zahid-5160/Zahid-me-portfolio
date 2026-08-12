@@ -4,6 +4,7 @@ import { achievements, education, experience } from '../data/content.js'
 import PageHero from '../components/PageHero.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Reveal from '../components/Reveal.jsx'
+import Tilt from '../components/Tilt.jsx'
 import { ArrowRight, Trophy } from '../components/Icons.jsx'
 
 export default function Experience() {
@@ -87,7 +88,7 @@ export default function Experience() {
           <div className="edu-grid">
             {education.map((entry, index) => (
               <Reveal key={entry.qualification} delay={index * 0.08}>
-                <article className="card card--hover" style={{ height: '100%' }}>
+                <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
                   <span className="edu-card__year">{entry.year}</span>
                   <h3 className="edu-card__qual">{entry.qualification}</h3>
                   <p className="edu-card__inst">{entry.institution}</p>
@@ -96,7 +97,7 @@ export default function Experience() {
                       {entry.detail}
                     </span>
                   )}
-                </article>
+                </Tilt>
               </Reveal>
             ))}
           </div>

@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 
 import Layout from './components/Layout.jsx'
 import RouteProgress from './components/RouteProgress.jsx'
+import ScrollProgress from './components/ScrollProgress.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home.jsx'
 
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <>
       <RouteProgress />
+      <ScrollProgress />
       <ScrollToTop />
 
       <Layout>
