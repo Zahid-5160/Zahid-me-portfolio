@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // Normally '/'. GitHub Pages serves project sites from a sub-folder
-  // (e.g. /zahid-portfolio/), so the deploy workflow sets VITE_BASE for us.
+  // Vercel serves the site from the root, so '/' is correct there.
+  // GitHub Pages serves project sites from a sub-folder (e.g. /zahid-portfolio/),
+  // so that workflow sets VITE_BASE to override this.
   base: process.env.VITE_BASE || '/',
   build: {
     // Keep the initial download small: Three.js and the animation library

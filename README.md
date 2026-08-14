@@ -30,7 +30,7 @@ Four pages, in a black and silver theme:
 | **Experience** | Work history, education and awards |
 | **Projects** | The things I have built |
 
-**Live address:** (https://zahid-2002-portfolio.vercel.app/)
+**Live address:** https://zahid-2002-portfolio.vercel.app/
 
 ### Running it on your own computer
 
@@ -61,7 +61,7 @@ npm run dev     # start the site, then open the address it prints
 | **Three.js** | Draws the slowly drifting field of dots behind the home page. It is real 3D, rendered by the graphics card. |
 | **Plain CSS** | All the styling is hand-written. No Bootstrap or Tailwind — that keeps the site small and the look entirely my own. |
 | **Sharp** | Runs only on my machine, never on the website. It resizes and sharpens the photographs. |
-| **GitHub Actions** | GitHub's robot. Every time I upload a change, it rebuilds the site and publishes it. |
+| **Vercel** | The host. Every time I upload a change to GitHub, Vercel rebuilds the site and puts the new version live. |
 
 ---
 
@@ -120,9 +120,9 @@ the movement stays smooth instead of stuttering.
 | `index.html` | The empty shell the browser loads first. Holds the page title and the preview details used when the link is shared. |
 | `package.json` | The project's ID card: its name, the `npm run` commands, and the list of outside code it needs. |
 | `package-lock.json` | Records the exact versions installed, so the site builds identically on any machine. Never edited by hand. |
-| `vite.config.js` | Build settings. Splits the big 3D library into its own file and sets the address prefix for GitHub Pages. |
-| `vercel.json` | Settings if the site is hosted on Vercel: security rules, caching, and page routing. |
-| `netlify.toml` | The same, for Netlify. Harmless to keep both. |
+| `vite.config.js` | Build settings. Splits the big 3D library into its own file and sets the address prefix the site is served from. |
+| `vercel.json` | **The host's settings.** Security rules, caching, and the routing that lets `/skills` work as a real address. |
+| `netlify.toml` | The same again, for Netlify, in case the site ever moves there. Harmless to keep. |
 | `.gitignore` | The list of things Git should ignore — installed packages, build output, the 7 MB master photos. |
 | `README.md` | This file. |
 
@@ -130,7 +130,7 @@ the movement stays smooth instead of stuttering.
 
 | File | What it is for |
 |---|---|
-| `deploy.yml` | The instructions GitHub's robot follows: install, build, and publish the site. Runs automatically on every upload. |
+| `deploy.yml` | An optional GitHub Actions workflow that publishes to GitHub Pages. The live site runs on Vercel instead, so this is a spare route — delete it if you never want a second copy. |
 
 ### `scripts/`
 
@@ -316,7 +316,7 @@ project uses.
 
 ## 9. Publishing
 
-The site publishes itself. There is no second service to sign up for.
+The site publishes itself. Push to GitHub and Vercel does the rest.
 
 ```bash
 git add .
@@ -324,28 +324,30 @@ git commit -m "describe what you changed"
 git push
 ```
 
-Wait about two minutes, then refresh the live address.
+Wait about a minute, then refresh the live address.
 
-**One-time setup**, in the browser: repository → **Settings → Pages** → under **Source**
-choose **GitHub Actions**. You can watch progress on the **Actions** tab; a green tick
-means it is live.
+**One-time setup**, in the browser: sign in to [vercel.com](https://vercel.com) with your
+GitHub account, choose **Add New → Project**, and pick the `Zahid-me-portfolio`
+repository. Vercel detects Vite on its own — the framework preset is **Vite**, the build
+command `npm run build`, and the output folder `dist`. Every push to `master` from then
+on redeploys automatically, and you can watch progress on the project's **Deployments**
+tab.
 
-If you rename the repository the address changes to match, and the build adjusts by
-itself. Only remember to update the address in `content.js`, `index.html`,
-`public/robots.txt` and `public/sitemap.xml` so Google and LinkedIn point to the right
-place.
+If the live address ever changes — a new project name, or your own domain — update it in
+`content.js`, `index.html`, `public/robots.txt` and `public/sitemap.xml` so Google and
+LinkedIn point to the right place.
 
 ---
 
 ## 10. Address, HTTPS and privacy
 
-**Naming.** `zahid_portfolio` cannot be a web address — underscores are not allowed.
-Use a hyphen: `zahid-portfolio`.
+**Naming.** Underscores are not allowed in a web address, so a repository called
+`zahid_portfolio` could not become one. Use hyphens — as `Zahid-me-portfolio` does.
 
-**HTTPS.** GitHub Pages turns on the padlock automatically and renews it for you.
-Nothing to set up, nothing to pay.
+**HTTPS.** Vercel turns on the padlock automatically and renews it for you. Nothing to
+set up, nothing to pay.
 
-**Your IP address.** A site like this never reveals it. The files sit on GitHub's servers
+**Your IP address.** A site like this never reveals it. The files sit on Vercel's servers
 around the world and visitors only ever connect to those. Your home connection is not
 involved once the site is published.
 
