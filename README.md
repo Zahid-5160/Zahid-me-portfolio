@@ -30,7 +30,7 @@ Four pages, in a black and silver theme:
 | **Experience** | Work history, education and awards |
 | **Projects** | The things I have built |
 
-**Live address:** https://zahid-5160.github.io/zahid-2002-portfolio/
+**Live address:** (https://zahid-2002-portfolio.vercel.app/)
 
 ### Running it on your own computer
 
