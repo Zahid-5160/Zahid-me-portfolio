@@ -5,9 +5,12 @@ import { useInView, useReducedMotion } from 'framer-motion'
  * Counts a number up from zero the first time it scrolls into view.
  * "7.6" counts up keeping one decimal place; "11" counts in whole numbers.
  *
+ * The two-second run and its gentle start-and-stop curve are taken from the
+ * counters on silverheightholdings.com.
+ *
  * Visitors who prefer reduced motion just see the final number.
  */
-export default function CountUp({ value, duration = 1400 }) {
+export default function CountUp({ value, duration = 2000 }) {
   const reduceMotion = useReducedMotion()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px -60px 0px' })
@@ -27,8 +30,8 @@ export default function CountUp({ value, duration = 1400 }) {
 
     const tick = (now) => {
       const progress = Math.min((now - start) / duration, 1)
-      // Ease out, so it sprints then settles rather than stopping dead
-      const eased = 1 - Math.pow(1 - progress, 3)
+      // Eases in and out, so the number gathers pace and then settles
+      const eased = 0.5 - Math.cos(progress * Math.PI) / 2
 
       setDisplay((target * eased).toFixed(decimals))
 

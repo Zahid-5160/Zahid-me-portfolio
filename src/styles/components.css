@@ -29,11 +29,18 @@
   z-index: 100;
   background: var(--nav-bg);
   border-bottom: 1px solid var(--nav-border);
-  transition: box-shadow var(--t-med) var(--ease-out);
+  transition: box-shadow var(--t-med) var(--ease-out),
+              transform 420ms var(--ease-out);
 }
 
 .nav--scrolled {
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* Scrolling down tucks the bar away above the top edge; scrolling back up
+   returns it. The extra pixel hides the hairline border underneath it. */
+.nav--tucked {
+  transform: translateY(calc(-100% - 1px));
 }
 
 /* A hairline of silver along the very top edge */

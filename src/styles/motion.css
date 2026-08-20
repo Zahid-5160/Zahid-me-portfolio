@@ -506,6 +506,23 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Scroll entrances — room for blocks to slide in from off their own edge
+   ------------------------------------------------------------------------
+   Sections reveal their contents by sliding them a full box-length from the
+   left, the right, above or below. A block on its way in therefore sits
+   outside the section for a moment. Clipping the sides keeps that from
+   pushing the page sideways.
+
+   `clip` rather than `hidden` on purpose: `hidden` would turn every section
+   into a scroll container and break the sticky header above it.
+   ------------------------------------------------------------------------ */
+
+.section,
+.cta-band {
+  overflow-x: clip;
+}
+
+/* ---------------------------------------------------------------------------
    Respect the visitor's choice.
    If their device asks for reduced motion, every looping or decorative
    animation above stops. The site still works exactly the same.
@@ -530,5 +547,10 @@
   .tag:hover,
   .filter:hover {
     transform: none !important;
+  }
+
+  /* The header stays put rather than sliding away as you scroll */
+  .nav--tucked {
+    transform: none;
   }
 }

@@ -24,7 +24,7 @@ export default function Skills() {
       {/* ============================================== CORE STRENGTHS === */}
       <section className="section">
         <div className="container">
-          <Reveal>
+          <Reveal from="down">
             <div className="heading-block">
               <span className="eyebrow">Core strengths</span>
               <h2 className="heading-block__title">Three things I do well</h2>
@@ -37,7 +37,11 @@ export default function Skills() {
 
           <div className="strength-grid">
             {strengths.map((strength, index) => (
-              <Reveal key={strength.title} delay={index * 0.08}>
+              <Reveal
+                key={strength.title}
+                from={index % 2 === 0 ? 'left' : 'right'}
+                delay={index * 0.08}
+              >
                 <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
                   <span className="card__index" aria-hidden>{index + 1}</span>
                   <h3 className="card__title">{strength.title}</h3>
@@ -52,7 +56,7 @@ export default function Skills() {
       {/* ============================================== SKILL GROUPS ===== */}
       <section className="section section--alt">
         <div className="container">
-          <Reveal>
+          <Reveal from="down">
             <div className="heading-block">
               <span className="eyebrow">Technical skills</span>
               <h2 className="heading-block__title">The full toolkit</h2>
@@ -64,7 +68,11 @@ export default function Skills() {
 
           <div className="skill-grid">
             {skillGroups.map((group, index) => (
-              <Reveal key={group.id} delay={index * 0.06}>
+              <Reveal
+                key={group.id}
+                from={index % 2 === 0 ? 'left' : 'right'}
+                delay={index * 0.06}
+              >
                 <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
                   <div className="skill-card__head">
                     <h3 className="card__title">{group.title}</h3>
@@ -87,7 +95,7 @@ export default function Skills() {
             ))}
           </div>
 
-          <Reveal delay={0.1}>
+          <Reveal from="up" delay={0.1}>
             <div className="btn-row" style={{ marginTop: 'var(--sp-7)' }}>
               <Link className="btn btn--primary" to="/projects">
                 See these skills in projects

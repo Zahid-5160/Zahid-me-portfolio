@@ -55,7 +55,7 @@ export default function Projects() {
       <section className="section">
         <div className="container">
           {/* ------------------------------------------------ filters --- */}
-          <Reveal>
+          <Reveal from="down">
             <div className="filters" role="group" aria-label="Filter projects by category">
               {filters.map((filter) => {
                 const isActive = activeFilter === filter.label
@@ -92,7 +92,11 @@ export default function Projects() {
                 const updated = formatUpdated(meta?.updated)
 
                 return (
-                  <Reveal key={project.id} delay={index * 0.06}>
+                  <Reveal
+                    key={project.id}
+                    from={index % 2 === 0 ? 'left' : 'right'}
+                    delay={index * 0.06}
+                  >
                     <Tilt as="article" className="card card--hover project-card">
                     <div className="project-card__head">
                       <div>
@@ -180,7 +184,7 @@ export default function Projects() {
           )}
 
           {/* ------------------------------------------------ callout --- */}
-          <Reveal delay={0.1}>
+          <Reveal from="up" delay={0.1}>
             <div className="callout" style={{ marginTop: 'var(--sp-7)' }}>
               <span className="callout__icon" aria-hidden>
                 <Github size={20} />

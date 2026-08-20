@@ -10,13 +10,40 @@ import { ArrowRight, Close, Menu } from './Icons.jsx'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
 
-  // Add a subtle border + shadow to the bar once the page scrolls
+  /* The bar picks up a border and shadow once the page scrolls, then gets
+     out of the way: scrolling down slides it up out of view, and the first
+     flick back up brings it straight down again. It is the sliding sticky
+     header from silverheightholdings.com.
+
+     It only starts hiding below `revealAfter`, so the top of every page
+     keeps a settled header rather than one that jumps on the first scroll. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
+    const revealAfter = 240
+    let lastY = window.scrollY
+    let queued = false
+
+    const update = () => {
+      queued = false
+      const y = window.scrollY
+
+      setScrolled(y > 8)
+      setHidden(y > revealAfter && y > lastY)
+
+      // Ignore rubber-band scrolling past the top or bottom of the page
+      lastY = Math.max(y, 0)
+    }
+
+    const onScroll = () => {
+      if (queued) return
+      queued = true
+      requestAnimationFrame(update)
+    }
+
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -37,7 +64,11 @@ export default function Navbar() {
   }, [menuOpen])
 
   return (
-    <header className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
+    <header
+      className={`nav${scrolled ? ' nav--scrolled' : ''}${
+        hidden && !menuOpen ? ' nav--tucked' : ''
+      }`}
+    >
       <div className="container container--wide nav__inner">
         <Link to="/" className="brand" aria-label={`${profile.name} — home`}>
           <span className="brand__mark" aria-hidden>{profile.initials}</span>

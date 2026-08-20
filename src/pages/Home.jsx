@@ -153,7 +153,7 @@ export default function Home() {
       {/* =================================================== STATS ======= */}
       <section className="section section--tight">
         <div className="container container--wide">
-          <Reveal className="stats">
+          <Reveal className="stats" from="down">
             {about.stats.map((stat) => (
               <div className="stat" key={stat.label}>
                 <span className="stat__value">
@@ -172,7 +172,7 @@ export default function Home() {
         <div className="container">
           <div className="about__grid">
             <div className="about__side">
-              <Reveal>
+              <Reveal from="left">
                 <div className="heading-block" style={{ marginBottom: 0 }}>
                   <span className="eyebrow">About</span>
                   <h2 className="heading-block__title">{about.heading}</h2>
@@ -180,7 +180,7 @@ export default function Home() {
                 </div>
               </Reveal>
 
-              <Reveal delay={0.12}>
+              <Reveal from="left" delay={0.12}>
                 <div className="facts">
                   <div className="fact">
                     <span className="fact__label">Based in</span>
@@ -204,7 +204,7 @@ export default function Home() {
               </Reveal>
             </div>
 
-            <Reveal delay={0.08}>
+            <Reveal from="right" delay={0.08}>
               <div className="about__prose">
                 {about.paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
@@ -228,7 +228,7 @@ export default function Home() {
         <div className="photo-band__veil" />
 
         <div className="container photo-band__content">
-          <Reveal className="cta-band__inner">
+          <Reveal className="cta-band__inner" from="up">
             <span className="eyebrow eyebrow--on-photo">Get in touch</span>
             <h2 className="cta-band__title">Looking for someone who can build it and measure it?</h2>
             <p className="cta-band__text">
