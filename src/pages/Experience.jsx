@@ -4,6 +4,7 @@ import { achievements, education, experience } from '../data/content.js'
 import PageHero from '../components/PageHero.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Reveal from '../components/Reveal.jsx'
+import SectionBumper from '../components/SectionBumper.jsx'
 import Tilt from '../components/Tilt.jsx'
 import { ArrowRight, Trophy } from '../components/Icons.jsx'
 
@@ -17,27 +18,21 @@ export default function Experience() {
         index="02 / Experience"
         eyebrow="Where I have worked"
         title="Experience & education"
-        subtitle="Eleven months building and maintaining live client websites, on top of a Computer Science degree."
+        subtitle="Four roles across software engineering, web development and technical support — building automation, shipping client sites, and keeping systems running."
         image="skyline"
       />
 
       {/* ================================================ WORK ========== */}
       <section className="section">
         <div className="container">
-          <Reveal from="down">
-            <div className="heading-block">
-              <span className="eyebrow">Professional experience</span>
-              <h2 className="heading-block__title">Work history</h2>
-            </div>
-          </Reveal>
+          <SectionBumper
+            eyebrow="Professional experience"
+            title="Work history"
+          />
 
           <div className="timeline">
             {experience.map((job, index) => (
-              <Reveal
-                key={`${job.company}-${job.role}`}
-                from="right"
-                delay={index * 0.08}
-              >
+              <Reveal key={`${job.company}-${job.role}`} delay={index * 0.08}>
                 <article className="timeline__item">
                   <span className="timeline__dot" aria-hidden />
 
@@ -82,21 +77,15 @@ export default function Experience() {
       {/* =========================================== EDUCATION ========== */}
       <section className="section section--alt">
         <div className="container">
-          <Reveal from="down">
-            <div className="heading-block">
-              <span className="eyebrow">Education</span>
-              <h2 className="heading-block__title">Academic background</h2>
-            </div>
-          </Reveal>
+          <SectionBumper
+            eyebrow="Education"
+            title="Academic background"
+          />
 
           <div className="edu-grid">
             {education.map((entry, index) => (
-              <Reveal
-                key={entry.qualification}
-                from={index % 2 === 0 ? 'left' : 'right'}
-                delay={index * 0.08}
-              >
-                <Tilt as="article" className="card card--hover" style={{ height: '100%' }}>
+              <Reveal key={entry.qualification} delay={index * 0.08}>
+                <Tilt as="article" className="card card--hover">
                   <span className="edu-card__year">{entry.year}</span>
                   <h3 className="edu-card__qual">{entry.qualification}</h3>
                   <p className="edu-card__inst">{entry.institution}</p>
@@ -115,19 +104,13 @@ export default function Experience() {
       {/* ========================================= ACHIEVEMENTS ========= */}
       <section className="section">
         <div className="container">
-          <Reveal from="down">
-            <div className="heading-block">
-              <span className="eyebrow">Achievement</span>
-              <h2 className="heading-block__title">Recognition</h2>
-            </div>
-          </Reveal>
+          <SectionBumper
+            eyebrow="Achievement"
+            title="Recognition"
+          />
 
           {achievements.map((achievement, index) => (
-            <Reveal
-              key={achievement.title}
-              from={index % 2 === 0 ? 'left' : 'right'}
-              delay={index * 0.08}
-            >
+            <Reveal key={achievement.title} delay={index * 0.08}>
               <div className="award">
                 <span className="award__icon" aria-hidden>
                   <Trophy />
@@ -143,7 +126,7 @@ export default function Experience() {
             </Reveal>
           ))}
 
-          <Reveal from="up" delay={0.12}>
+          <Reveal delay={0.12}>
             <div className="btn-row" style={{ marginTop: 'var(--sp-7)' }}>
               <Link className="btn btn--primary" to="/projects">
                 Browse my projects

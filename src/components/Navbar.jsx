@@ -80,7 +80,7 @@ export default function Navbar() {
 
         <nav aria-label="Main navigation">
           <ul className="nav__links">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
@@ -91,13 +91,19 @@ export default function Navbar() {
                 >
                   {({ isActive }) => (
                     <>
+                      {/* Corner brackets travel to whichever page is open,
+                          in place of a filled pill. */}
                       {isActive && (
                         <motion.span
-                          layoutId="nav-pill"
-                          className="nav__pill"
-                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                          layoutId="nav-bracket"
+                          className="nav__bracket"
+                          aria-hidden
+                          transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                         />
                       )}
+                      <span className="nav__num" aria-hidden>
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
                       {/* Two copies of the label: on hover the first slides
                           up out of view as the second rises to replace it. */}
                       <span className="nav__link-swap">
@@ -156,7 +162,7 @@ export default function Navbar() {
           >
             <div className="container">
               <ul className="nav__mobile-list">
-                {navLinks.map((link) => (
+                {navLinks.map((link, index) => (
                   <li key={link.to}>
                     <NavLink
                       to={link.to}
@@ -165,6 +171,9 @@ export default function Navbar() {
                         `nav__mobile-link${isActive ? ' nav__mobile-link--active' : ''}`
                       }
                     >
+                      <span className="nav__num" aria-hidden>
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
                       {link.label}
                     </NavLink>
                   </li>

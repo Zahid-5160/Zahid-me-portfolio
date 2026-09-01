@@ -19,7 +19,7 @@
   height: 2px;
   z-index: 130;
   transform-origin: 0 50%;
-  background: linear-gradient(90deg, #6e727a, #ffffff);
+  background: linear-gradient(90deg, #1b2a50, #9dc3e8, #ffffff);
   pointer-events: none;
 }
 
@@ -292,42 +292,12 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Portrait — silver ring and a slow sheen across the photograph
+   Portrait — the cut-out figure standing in the hero
+   ------------------------------------------------------------------------
+   The ring and the drifting sheen that used to live here belonged to the
+   framed photograph. A free-standing figure has no frame to trace and no
+   glass to catch the light, so both are gone.
    ------------------------------------------------------------------------ */
-
-.portrait__ring {
-  position: absolute;
-  inset: -14px;
-  border-radius: calc(var(--r-xl) + 10px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  pointer-events: none;
-  animation: ring-breathe 6s var(--ease-in-out) infinite;
-}
-
-@keyframes ring-breathe {
-  0%, 100% { transform: scale(1);    opacity: 0.55; }
-  50%      { transform: scale(1.02); opacity: 0.9; }
-}
-
-.portrait__sheen {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.10) 50%,
-    transparent 60%
-  );
-  transform: translateX(-110%);
-  animation: portrait-sheen 7s var(--ease-in-out) infinite;
-}
-
-@keyframes portrait-sheen {
-  0%, 62%   { transform: translateX(-110%); }
-  88%, 100% { transform: translateX(110%); }
-}
 
 .portrait__chip {
   animation: chip-in 700ms var(--ease-out) 900ms both;
@@ -443,8 +413,81 @@
   transition: transform 900ms var(--ease-out);
 }
 
+/* ---------------------------------------------------------------------------
+   Portrait hover — he steps forward
+   ------------------------------------------------------------------------
+   Four things move together, and they move for the same reason: the figure
+   lifts slightly, so the light behind him spreads, his cast shadow draws in
+   and softens the way a real one does as its subject leaves the ground, and
+   his own shadow lengthens. Nothing skews or rotates — he is standing in
+   the scene, not a card being tilted.
+   ------------------------------------------------------------------------ */
+
+/* The light behind him. Sits under the figure and stays invisible until
+   the pointer arrives. */
+.portrait::before {
+  content: '';
+  position: absolute;
+  inset: 2% -14% 12% -14%;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.86);
+  background: radial-gradient(
+    ellipse 58% 52% at 50% 46%,
+    rgba(157, 195, 232, 0.22) 0%,
+    rgba(27, 42, 80, 0.18) 46%,
+    transparent 72%
+  );
+  filter: blur(26px);
+  transition: opacity 620ms var(--ease-out),
+              transform 620ms var(--ease-out);
+}
+
+.portrait:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portrait__img {
+  /* Grows from the ground he is standing on, not from his middle */
+  transform-origin: 50% 100%;
+  transition: transform 620ms var(--ease-out),
+              filter 620ms var(--ease-out);
+}
+
 .portrait:hover .portrait__img {
-  transform: scale(1.03);
+  transform: translateY(-10px) scale(1.025);
+  /* The cast shadow drops further as he rises */
+  filter: drop-shadow(0 30px 46px rgba(5, 9, 18, 0.62))
+          drop-shadow(0 4px 10px rgba(5, 9, 18, 0.38));
+}
+
+/* The ground shadow tightens and softens as he leaves it — scaled rather
+   than resized, so it stays on the compositor. */
+.portrait::after {
+  transition: transform 620ms var(--ease-out),
+              opacity 620ms var(--ease-out),
+              filter 620ms var(--ease-out);
+}
+
+.portrait:hover::after {
+  transform: translateX(-50%) scale(0.82, 0.72);
+  opacity: 0.72;
+  filter: blur(9px);
+}
+
+/* The status chip brightens rather than moving — it carries the entrance
+   animation above, and a transform here would fight its fill state. */
+.portrait__chip {
+  transition: background var(--t-med) var(--ease-out),
+              border-color var(--t-med) var(--ease-out);
+}
+
+.portrait:hover .portrait__chip {
+  background: rgba(9, 15, 28, 0.94);
+  border-color: rgba(255, 255, 255, 0.34);
 }
 
 /* ---------------------------------------------------------------------------
@@ -471,7 +514,7 @@
 
 /* The portrait's tilt wrapper takes over the sizing from .portrait */
 .portrait-tilt {
-  width: min(100%, 340px);
+  width: min(100%, 380px);
 }
 
 .portrait-tilt > .portrait {
@@ -480,7 +523,7 @@
 
 @media (max-width: 980px) {
   .portrait-tilt {
-    width: min(100%, 280px);
+    width: min(100%, 300px);
   }
 }
 
@@ -488,7 +531,8 @@
    neighbouring cards in a row stay the same height. */
 .skill-grid > div,
 .strength-grid > div,
-.edu-grid > div {
+.edu-grid > div,
+.project-grid > div {
   height: 100%;
 }
 
@@ -502,7 +546,44 @@
   z-index: 115;
   pointer-events: none;
   transform-origin: 50% 100%;
-  background: linear-gradient(180deg, #16181c, #0a0b0d);
+  background: linear-gradient(180deg, #17233d, #090e18);
+}
+
+/* ---------------------------------------------------------------------------
+   Ken Burns — every photograph drifts and zooms, slowly and for ever
+   ------------------------------------------------------------------------
+   Nothing here is tied to the scroll position. The photographs simply keep
+   moving, which is what stops a full-bleed still from looking like a dead
+   panel. `alternate` sends it back the way it came instead of snapping to
+   the start, so there is never a visible jump.
+   ------------------------------------------------------------------------ */
+
+@keyframes ken-burns {
+  from { transform: scale(1)    translate3d(0, 0, 0); }
+  to   { transform: scale(1.06) translate3d(-1%, -0.8%, 0); }
+}
+
+.hero__photo,
+.page-hero__img,
+.photo-band__img {
+  animation: ken-burns 40s var(--ease-in-out) infinite alternate;
+}
+
+/* ---------------------------------------------------------------------------
+   Word-by-word headline reveal
+   ------------------------------------------------------------------------ */
+
+.word-reveal__word {
+  display: inline-block;
+  will-change: opacity, transform;
+}
+
+/* The words are separate inline-blocks, so the spaces between them are drawn
+   rather than inherited from the text. */
+.word-reveal__word:not(:last-child)::after {
+  content: ' ';
+  display: inline-block;
+  width: 0.28em;
 }
 
 /* ---------------------------------------------------------------------------
@@ -531,21 +612,25 @@
 @media (prefers-reduced-motion: reduce) {
   .scroll-progress,
   .brand__mark::after,
-  .portrait__ring,
-  .portrait__sheen,
   .portrait__chip,
   .hero__cue-line::after,
   .timeline::before,
   .timeline__item:first-child .timeline__dot::after,
   .card--hover:hover::before,
-  .btn:hover::after {
+  .btn:hover::after,
+  .hero__photo,
+  .page-hero__img,
+  .photo-band__img {
     animation: none !important;
   }
 
   .btn:hover,
   .icon-btn:hover,
   .tag:hover,
-  .filter:hover {
+  .filter:hover,
+  .portrait:hover .portrait__img,
+  .portrait:hover::after,
+  .portrait:hover::before {
     transform: none !important;
   }
 

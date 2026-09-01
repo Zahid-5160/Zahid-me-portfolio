@@ -10,7 +10,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #0c0d0f;
+  background: #0e1626;
   /* Fills the screen below the header without ever sliding under it */
   min-height: min(calc(100svh - var(--nav-h)), 820px);
   display: flex;
@@ -51,8 +51,8 @@
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(105deg, rgba(10, 11, 13, 0.90) 0%, rgba(10, 11, 13, 0.72) 42%, rgba(10, 11, 13, 0.46) 100%),
-    linear-gradient(180deg, rgba(10, 11, 13, 0.55) 0%, transparent 30%, rgba(10, 11, 13, 0.65) 100%);
+    linear-gradient(105deg, rgba(9, 15, 28, 0.90) 0%, rgba(9, 15, 28, 0.72) 42%, rgba(9, 15, 28, 0.46) 100%),
+    linear-gradient(180deg, rgba(9, 15, 28, 0.55) 0%, transparent 30%, rgba(9, 15, 28, 0.65) 100%);
 }
 
 .hero__grid {
@@ -89,7 +89,7 @@
   font-family: var(--font-head);
   font-size: var(--fs-xl);
   font-weight: 500;
-  color: #e3e4e7;
+  color: #cfdcec;
   letter-spacing: -0.01em;
 }
 
@@ -141,46 +141,63 @@
 
 .portrait {
   position: relative;
-  width: min(100%, 340px);
+  /* Its own stacking context, so the glow behind the figure on hover
+     cannot slip out over the hero's other layers. */
+  isolation: isolate;
+  width: min(100%, 380px);
+  /* Room under the figure for the ground shadow and the status chip */
+  padding-bottom: var(--sp-6);
 }
 
-/* Thin offset frame behind the photo */
-.portrait::before {
+/* The shadow the figure casts on the ground. Without it a cut-out looks
+   pasted on top of the building rather than standing in front of it. */
+.portrait::after {
   content: '';
   position: absolute;
-  inset: -12px -12px 12px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: var(--r-xl);
+  left: 50%;
+  bottom: var(--sp-5);
+  width: 74%;
+  height: 26px;
+  transform: translateX(-50%);
+  border-radius: 50%;
   pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(5, 9, 18, 0.55) 0%,
+    rgba(5, 9, 18, 0.28) 45%,
+    transparent 72%
+  );
+  filter: blur(6px);
 }
 
 .portrait__media {
+  display: block;
   position: relative;
-  /* The photo is very tall (610 x 1295), so the frame is kept tall too or
-     most of it would be cropped away. At 5/8 about 75% of the picture shows.
-     Lower the number (1 / 2) to reveal more; raise it (4 / 5) to crop in. */
-  aspect-ratio: 5 / 8;
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  background: linear-gradient(150deg, #2c2f33, #17191c);
-  box-shadow: var(--shadow-lg);
+  z-index: 1;
 }
 
 .portrait__img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Sits the visible window right at the top of the photo, so the whole of
-     the hair is in shot. Everything cropped comes off the bottom instead.
-     Raise this number to slide the view down; lower it to slide it up. */
-  object-position: center 2%;
+  height: auto;
+  /* A navy-tinted shadow rather than a black one, so the figure picks up
+     the light of the scene it is standing in. */
+  filter: drop-shadow(0 18px 34px rgba(5, 9, 18, 0.55))
+          drop-shadow(0 2px 6px rgba(5, 9, 18, 0.35));
+  /* The photograph is cropped at the trousers. Fading the last stretch to
+     nothing lets the figure dissolve into the hero instead of stopping at
+     a hard horizontal line. */
+  -webkit-mask-image: linear-gradient(180deg, #000 76%, rgba(0, 0, 0, 0.55) 90%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 76%, rgba(0, 0, 0, 0.55) 90%, transparent 100%);
 }
 
 /* Shown when no photo file has been added yet */
 .portrait__fallback {
-  position: absolute;
-  inset: 0;
   display: grid;
+  aspect-ratio: 5 / 8;
+  border-radius: var(--r-xl);
+  background: linear-gradient(150deg, #22304e, #131f3c);
   place-items: center;
   gap: var(--sp-2);
   text-align: center;
@@ -205,15 +222,16 @@
 /* Floating caption chip on the portrait */
 .portrait__chip {
   position: absolute;
+  z-index: 2;
   left: 50%;
-  bottom: -18px;
+  bottom: 0;
   transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
   padding: 0.5rem 0.875rem;
   border-radius: var(--r-pill);
-  background: rgba(12, 13, 15, 0.88);
+  background: rgba(9, 15, 28, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -324,7 +342,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #0c0d0f;
+  background: #0e1626;
   padding-block: clamp(3rem, 6vw, 4.5rem);
 }
 
@@ -344,8 +362,8 @@
   /* Dark enough for white text on the left, light enough that the building
      still reads on the right. */
   background:
-    linear-gradient(100deg, rgba(10, 11, 13, 0.88) 0%, rgba(10, 11, 13, 0.60) 52%, rgba(10, 11, 13, 0.26) 100%),
-    linear-gradient(180deg, rgba(10, 11, 13, 0.42), transparent 60%);
+    linear-gradient(100deg, rgba(9, 15, 28, 0.88) 0%, rgba(9, 15, 28, 0.60) 52%, rgba(9, 15, 28, 0.26) 100%),
+    linear-gradient(180deg, rgba(9, 15, 28, 0.42), transparent 60%);
 }
 
 .page-hero__content {
@@ -545,7 +563,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-7);
 }
 
 .filter {
@@ -596,18 +614,28 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: var(--sp-4);
-  align-items: start;
+  align-items: stretch;
+  /* Every row is sized to the tallest card on the page, not just the
+     tallest in its own row — so all six boxes come out identical. */
+  grid-auto-rows: 1fr;
 }
 
-.project-card {
-  gap: var(--sp-4);
-}
-
+/* No gap of its own — a project card uses the same internal rhythm as every
+   other card on the site (.card: sp-5 padding, sp-3 between blocks). */
 .project-card__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--sp-3);
+}
+
+/* Title and blurb are a pair, spaced by a gap like everything else rather
+   than by a margin of their own. */
+.project-card__head > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
 }
 
 .project-card__title {
@@ -619,7 +647,6 @@
 .project-card__blurb {
   font-size: var(--fs-sm);
   color: var(--muted);
-  margin-top: var(--sp-1);
 }
 
 .project-card__cat {
@@ -632,8 +659,14 @@
   align-items: center;
   gap: var(--sp-3);
   margin-top: auto;
-  padding-top: var(--sp-4);
+  /* Matches the card's own sp-3 gap, so the rule sits centred in its space */
+  padding-top: var(--sp-3);
   border-top: 1px solid var(--line);
+}
+
+/* The stand-in when a project has neither a repo nor a demo link */
+.project-card__note {
+  font-size: var(--fs-xs);
 }
 
 /* Live repo statistics pulled from the GitHub API */
@@ -661,14 +694,33 @@
 
 /* Empty state when a filter matches nothing */
 .empty-state {
-  padding: var(--sp-8) var(--sp-5);
+  padding: var(--sp-7);
   text-align: center;
   color: var(--muted);
   border: 1px dashed var(--line-strong);
   border-radius: var(--r-lg);
 }
 
+/* A card fills whatever cell the grid gives it, so the boxes in a grid are
+   all the same size and their footers line up along the bottom. */
+.project-grid .card,
+.skill-grid .card,
+.strength-grid .card,
+.edu-grid .card {
+  height: 100%;
+}
+
 /* Callout explaining how to add more repositories */
+.callout--spaced {
+  margin-top: var(--sp-7);
+}
+
+.callout__arrow {
+  display: inline;
+  vertical-align: -2px;
+  margin-inline-start: 4px;
+}
+
 .callout {
   display: flex;
   gap: var(--sp-4);

@@ -70,8 +70,13 @@ export const profile = {
    nothing breaks.
    ------------------------------------------------------------------------ */
 export const photo = {
-  src: '/images/profile/portrait.jpg',
-  alt: 'Portrait of Mohammed Zahid',
+  /* The cut-out portrait, so the figure stands against the hero photograph
+     rather than sitting in a framed window. The PNG is the fallback; the
+     WebP versions carry the same transparency at a fraction of the size. */
+  src: '/images/profile/portrait-cutout.png',
+  widths: [380, 610, 900, 1220],
+  webp: (w) => `/images/profile/portrait-cutout-${w}.webp`,
+  alt: 'Mohammed Zahid',
 }
 
 /* ---------------------------------------------------------------------------
@@ -79,7 +84,7 @@ export const photo = {
    ------------------------------------------------------------------------ */
 export const about = {
   heading: 'About me',
-  lead: 'Full-stack web developer and data analyst with 11 months of professional experience.',
+  lead: 'Full-stack web developer and data analyst with over two years of professional experience.',
   paragraphs: [
     'I work across both sides of a product. On the front end I build interfaces with JavaScript (ES6+), React and clean, hand-written CSS. On the back end I work with Python, Flask and Django, and connect everything together with REST APIs.',
     'The other half of my work is data. I use Python with Pandas and NumPy to clean messy datasets, then Matplotlib and Seaborn to turn them into charts people can actually act on. I design database schemas in SQLite and MongoDB, write optimised queries, and build ETL pipelines.',
@@ -87,9 +92,9 @@ export const about = {
   ],
   // Small facts shown as a strip under the hero
   stats: [
-    { value: '11', suffix: ' mo', label: 'Professional experience' },
-    { value: '4', suffix: '+', label: 'Shipped projects' },
-    { value: '7.6', suffix: '', label: 'CGPA — B.E. CSE' },
+    { value: '2', suffix: '+ yr', label: 'Professional experience' },
+    { value: '6', suffix: '+', label: 'Shipped projects' },
+    { value: '7.7', suffix: '', label: 'CGPA — B.E. CSE' },
     { value: '1', suffix: 'st', label: 'Battle of Science' },
   ],
 }
@@ -166,10 +171,38 @@ export const strengths = [
    ------------------------------------------------------------------------ */
 export const experience = [
   {
-    company: 'Arsuma Solutions',
-    role: 'Web Developer',
+    company: 'The Visa Guy',
+    role: 'Software Engineer',
+    type: 'Hybrid',
+    location: 'Bengaluru, Karnataka, India',
+    start: 'May 2026',
+    end: 'Present',
+    summary: 'Building Python automation that takes repetitive manual work off the team and makes the results more accurate.',
+    bullets: [
+      'Develop Python-based automation tools that replace repetitive manual tasks, improving accuracy and cutting the time each process takes.',
+      'Work across API development and integration to connect internal systems and move data between them without manual handling.',
+      'Ship changes through to production as part of the product development team.',
+    ],
+    tags: ['Python', 'API Development', 'Automation', 'Data Analytics'],
+  },
+  {
+    company: 'Pexaworks Technologies',
+    role: 'Web Development Intern',
     type: 'Remote',
-    location: 'Noida, India',
+    location: 'Dubai, United Arab Emirates',
+    start: 'Dec 2025',
+    end: 'Dec 2025',
+    summary: 'A short remote front-end internship with a Dubai-based technology company.',
+    bullets: [
+      'Worked on front-end web development tasks as part of the remote engineering team.',
+    ],
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+  {
+    company: 'Arsuma Solutions',
+    role: 'Web Development Intern',
+    type: 'Remote',
+    location: 'Bengaluru, Karnataka, India',
     start: 'Jan 2025',
     end: 'Nov 2025',
     summary: 'Built and maintained live client websites end to end, from custom front-end code to API integrations and search performance.',
@@ -179,7 +212,22 @@ export const experience = [
       'Debugged and resolved front-end and back-end issues, which improved overall site stability and user engagement.',
       'Applied SEO best practices — structured data and performance tweaks — to increase search visibility.',
     ],
-    tags: ['JavaScript', 'CSS', 'WordPress', 'REST APIs', 'SEO'],
+    tags: ['JavaScript', 'CSS', 'HTML', 'WordPress', 'REST APIs', 'SEO'],
+  },
+  {
+    company: 'DNS IT Solutions',
+    role: 'Technical Support Specialist',
+    type: 'On-site',
+    location: 'Bengaluru, Karnataka, India',
+    start: 'Sep 2020',
+    end: 'Aug 2021',
+    summary: 'A year on-site as a hardware and software technician, alongside WordPress development work.',
+    bullets: [
+      'Diagnosed and repaired computer hardware and resolved software faults for clients on site.',
+      'Handled routine software maintenance, keeping client machines serviceable and up to date.',
+      'Built and maintained WordPress sites alongside the support work.',
+    ],
+    tags: ['Software Maintenance', 'Hardware Troubleshooting', 'WordPress'],
   },
 ]
 
@@ -187,7 +235,7 @@ export const education = [
   {
     qualification: 'B.E. in Computer Science',
     institution: 'City Engineering College, Karnataka',
-    detail: '7.6 CGPA',
+    detail: '7.7 CGPA',
     year: '2025',
   },
   {
@@ -225,58 +273,89 @@ export const achievements = [
    ------------------------------------------------------------------------ */
 export const projects = [
   {
-    id: 'churn',
-    title: 'Telecom Customer Churn Prediction',
+    id: 'restro5',
+    title: 'Restro5 — Five-Slot Kitchen Queue',
+    category: 'Full-stack',
+    blurb: 'A restaurant platform where the kitchen can only ever hold five orders at once — enforced atomically, not by convention.',
+    bullets: [
+      'Split the system across a NestJS gateway handling auth, roles, menu, inventory and Socket.IO event fan-out, and a FastAPI engine that owns the five-slot state machine, with Prisma and PostgreSQL behind both.',
+      'Enforced the five-order limit as an atomic slot ledger in Redis written in Lua, so two waiters claiming the last slot at the same instant can never both succeed.',
+      'Ran background work through Celery over Redis and pushed live order state to every connected dashboard over WebSockets.',
+      'Packaged the whole stack with Docker behind an nginx proxy serving the dashboard and a same-origin API.',
+    ],
+    tech: ['NestJS', 'FastAPI', 'Redis + Lua', 'PostgreSQL', 'Prisma', 'Celery', 'Docker'],
+    repo: 'https://github.com/Zahid-5160/Restro-Queue5-MgMn',
+    demo: null,
+  },
+  {
+    id: 'retain',
+    title: 'Retain — Employee Churn Prediction',
     category: 'Data',
-    blurb: 'Found out which telecom customers were about to leave, and why.',
+    blurb: 'Works out who is about to resign, what is driving it, and what would keep them.',
     bullets: [
-      'Ran a full exploratory data analysis on telecom churn data to identify customer retention patterns and the factors driving churn.',
-      'Cleaned the dataset, handled missing values and produced statistical summaries using Pandas and NumPy.',
-      'Built visualisations with Matplotlib and Seaborn covering customer demographics, subscription behaviour and service usage trends.',
+      'Trained a scikit-learn classifier on the people who had already left, then turned each score into a plain-English answer — not just a probability, but the factors behind it.',
+      'Cleaned the data, engineered the features and produced the statistical summaries in pandas, keeping the exploratory analysis alongside the application.',
+      'Served the model through a FastAPI back end with a vanilla JavaScript dashboard on top and SQLite behind it.',
+      'Documented the fairness constraints the tool deliberately works within, and its honest limitations, rather than overselling the accuracy.',
     ],
-    tech: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn'],
-    repo: null,
+    tech: ['Python', 'scikit-learn', 'pandas', 'FastAPI', 'SQLite', 'JavaScript'],
+    repo: 'https://github.com/Zahid-5160/Retain-Empolyee-Churn-Prediction',
     demo: null,
   },
   {
-    id: 'chat-ai',
-    title: 'Conversational AI Web App',
+    id: 'silver-height-marketing',
+    title: 'Silver Height — Marketing Site',
     category: 'Web',
-    blurb: 'A ChatGPT-style chat app with real-time replies and saved conversation history.',
+    blurb: 'A corporate marketing site built in WordPress, then exported to static so it loads fast and stays up.',
     bullets: [
-      'Built a full-stack AI chat application that calls LLM APIs through a Flask back end, with multi-turn context management and prompt engineering for coherent replies.',
-      'Designed a responsive async front end using fetch and async/await so messages stream in without freezing the page.',
-      'Logged every conversation to MongoDB, enabling session retrieval and usage analytics through aggregation pipelines.',
+      'Built a fully responsive corporate site in WordPress and Elementor, extended with hand-written CSS and ES6+ JavaScript well beyond what the page builder offered.',
+      'Optimised images, assets and layout, then exported the site to static files — no database and no plugin stack to fail in production.',
+      'Structured the markup for SEO and verified the result across browsers and screen sizes.',
     ],
-    tech: ['JavaScript', 'Flask', 'Python', 'LLM API', 'MongoDB'],
-    repo: null,
+    tech: ['WordPress', 'Elementor', 'JavaScript (ES6+)', 'HTML5', 'Custom CSS'],
+    repo: 'https://github.com/Zahid-5160/Real-estate-website-wordpress',
+    demo: 'https://silverheightmarketing.com/',
+  },
+  {
+    id: 'cadabella',
+    title: 'Cadabella — Jewellery Storefront',
+    category: 'Web',
+    blurb: 'A luxury jewellery showcase, laid out so the product photography carries the page.',
+    bullets: [
+      'Designed an elegant product showcase in WordPress and Elementor, with custom CSS for the type and spacing the builder could not express.',
+      'Built the homepage, product section and shop pages to hold up from phone to desktop.',
+      'Compressed the imagery and exported a static build, keeping a photography-heavy site quick to load.',
+    ],
+    tech: ['WordPress', 'Elementor', 'JavaScript (ES6+)', 'HTML5', 'Custom CSS'],
+    repo: 'https://github.com/Zahid-5160/-Jewelry-Website',
     demo: null,
   },
   {
-    id: 'silver-heights',
-    title: 'Silver Heights — Real Estate Website',
+    id: 'da-gama',
+    title: 'Da Gama Voyager — Travel Assistant',
     category: 'Web',
-    blurb: 'A responsive property listing site built for a real estate business.',
+    blurb: 'A travel agency site with an assistant that answers the questions the FAQ page never covers.',
     bullets: [
-      'Developed a fully responsive real estate website with dynamic property listing pages, filters and clear navigation to make properties easier to find.',
-      'Implemented contact forms and lead capture so enquiries reach the sales team directly.',
-      'Optimised loading performance and mobile responsiveness for a smooth experience across devices.',
+      'Built the site in Flask with Jinja2 templates — packages, gallery, and a booking form validated server-side before it reports success.',
+      'Wrote the assistant as a set of regular-expression keyword rules rather than a language model, covering packages, flights, hotels, visas, payments and cancellations.',
+      'Put the assistant on its own page and as a floating widget on every other, with quick-reply chips so it can be tried without typing.',
     ],
-    tech: ['WordPress', 'Elementor', 'Custom CSS', 'Custom JS'],
-    repo: null,
-    demo: 'https://silverheightholdings.com/',
+    tech: ['Python', 'Flask', 'Jinja2', 'Bootstrap 5', 'JavaScript'],
+    repo: 'https://github.com/Zahid-5160/Travel-assistance-chatbot',
+    demo: null,
   },
   {
-    id: 'hospital-dbms',
-    title: 'Hospital Management System',
+    id: 'ifza-care',
+    title: 'IFZA Care — Hospital Management',
     category: 'Database',
-    blurb: 'A normalised database design that enforces correctness at the data layer.',
+    blurb: 'Doctors, patients, appointments and enquiries, kept straight in one Django application.',
     bullets: [
-      'Designed a fully normalised relational schema with stored procedures for billing and triggers that detect appointment conflicts, enforcing data integrity in the database itself.',
-      'Wrote SQL reports using window functions (RANK, ROW_NUMBER, LAG) and CTEs for doctor workload, bed occupancy and revenue-by-department analytics.',
+      'Modelled doctors, patients, appointments and visitor messages as related Django models over SQLite, so the data stays consistent as records are added.',
+      'Built the four data screens and the appointment booking flow, leaning on Django for validation, CSRF protection and authentication.',
+      'Wrote the documentation for a reader with no programming background — every folder, every concept and a glossary — which forced the structure to stay explainable.',
     ],
-    tech: ['SQLite', 'Django', 'ER Modelling', 'Stored Procedures'],
-    repo: null,
+    tech: ['Django', 'Python', 'SQLite', 'HTML', 'CSS'],
+    repo: 'https://github.com/Zahid-5160/Hospital-Management-System-DB',
     demo: null,
   },
 ]

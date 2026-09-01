@@ -20,6 +20,7 @@ export default function Tilt({
   as = 'div',
   max = 5,
   glare = true,
+  style,
   ...rest
 }) {
   const Tag = motion[as] ?? motion.div
@@ -65,7 +66,7 @@ export default function Tilt({
 
   if (reduceMotion) {
     const Plain = as
-    return <Plain className={className} {...rest}>{children}</Plain>
+    return <Plain className={className} style={style} {...rest}>{children}</Plain>
   }
 
   return (
@@ -76,6 +77,11 @@ export default function Tilt({
       onPointerEnter={handleEnter}
       onPointerLeave={handleLeave}
       style={{
+        /* The caller's own styles come first so they can set things like
+           height, but they can no longer wipe out the rotation below —
+           passing `style` through `rest` used to replace this object
+           entirely and switch the tilt off without any warning. */
+        ...style,
         rotateX: smoothRotateX,
         rotateY: smoothRotateY,
         transformPerspective: 900,

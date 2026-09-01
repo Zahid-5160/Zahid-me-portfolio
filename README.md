@@ -7,8 +7,10 @@ JavaScript, React, HTML and CSS for the part people see, and Python with Flask o
 for the part they do not. On the data side I use Python with Pandas and NumPy to clean
 messy data, and Matplotlib and Seaborn to turn it into charts that answer a question.
 
-I spent 11 months at Arsuma Solutions building and looking after real client websites.
-I hold a B.E. in Computer Science (7.6 CGPA, 2025).
+I am currently a Software Engineer at The Visa Guy, building Python automation. Before
+that I spent 11 months at Arsuma Solutions looking after real client websites, with a
+short remote internship at Pexaworks and a year in technical support at DNS IT Solutions.
+I hold a B.E. in Computer Science (7.7 CGPA, 2025).
 
 - **Email:** [mdzahidzahu@gmail.com](mailto:mdzahidzahu@gmail.com)
 - **GitHub:** [github.com/Zahid-5160](https://github.com/Zahid-5160)

@@ -3,54 +3,62 @@
    Every colour, size and spacing value the site uses is defined once, here.
    Change a value here and it updates everywhere.
 
-   Palette: black and greyish silver. No colour hues at all — hierarchy comes
-   from contrast and from the metallic mid-greys, which keeps it corporate.
+   Palette: taken from the portrait — navy blazer and powder-blue shirt.
+
+   The colours are sampled from the photograph itself rather than guessed:
+   the blazer reads #1b2a50 consistently across the weave, the shirt around
+   #bfd6ee. The blazer navy is used exactly as measured for the accent and
+   the top bar; the shirt supplies the paper in light mode and the accent in
+   dark mode, where a deep navy would disappear into the ground.
+
+   Every text-on-background pair here clears WCAG AA at small sizes.
    ========================================================================== */
 
 :root {
-  /* --- Neutral base: cool silver-greys ---------------------------------- */
-  --bg:            #f2f2f3;
-  --bg-alt:        #e7e7e9;
+  /* --- Neutral base: the shirt's powder blue, as paper ------------------ */
+  --bg:            #eef2f8;
+  --bg-alt:        #dfe7f2;
   --surface:       #ffffff;
-  --surface-2:     #f8f8f9;
-  --surface-glass: rgba(255, 255, 255, 0.76);
+  --surface-2:     #f5f8fc;
+  --surface-glass: rgba(255, 255, 255, 0.78);
 
-  --line:          #dbdbde;
-  --line-strong:   #bfc0c5;
+  --line:          #d5dfec;
+  --line-strong:   #b3c3d8;
 
-  /* --- Text: near-black through to mid silver --------------------------- */
-  --ink:           #0c0d0f;
-  --text:          #3e4045;
-  --muted:         #76787e;
+  /* --- Text: deep navy through to a slate mid-tone ---------------------- */
+  --ink:           #101a2e;
+  --text:          #3a4761;
+  /* 4.66:1 on the ground, 5.23:1 on a card — both clear AA */
+  --muted:         #5f6d85;
 
-  /* --- Accent: black. Used for primary buttons and emphasis. ------------ */
-  --accent:        #16171a;
-  --accent-hover:  #000000;
-  --accent-soft:   #e6e6e9;
-  --accent-line:   #c2c3c8;
-  --on-accent:     #ffffff;
+  /* --- Accent: the blazer navy, exactly as sampled. --------------------- */
+  --accent:        #1b2a50;
+  --accent-hover:  #142040;
+  --accent-soft:   #dde6f4;
+  --accent-line:   #aebfd8;
+  --on-accent:     #f4f8fd;
 
-  /* --- Metal: the greyish silver, for small highlights ------------------ */
-  --metal:         #85888f;
-  --metal-soft:    #ececed;
+  /* --- Metal: a cool blue-silver, for small highlights ------------------ */
+  --metal:         #8494ab;
+  --metal-soft:    #e7edf5;
 
-  /* --- The black bar across the top ------------------------------------- */
-  --nav-bg:        #0c0d0f;
-  --nav-border:    #24262a;
-  --nav-text:      #a5a8ae;
+  /* --- The bar across the top is the blazer ----------------------------- */
+  --nav-bg:        #131f3c;
+  --nav-border:    #26355a;
+  --nav-text:      #a8b6cd;
   --nav-text-hi:   #ffffff;
 
   /* --- Overlays used on top of the building photographs -----------------
      Kept deliberately strong: the photographs are bright, and body text
      over them has to stay comfortably readable. */
-  --veil-strong:   rgba(10, 11, 13, 0.86);
-  --veil-soft:     rgba(10, 11, 13, 0.66);
-  --on-photo:      #f5f5f6;
-  --on-photo-mute: #cdced2;
+  --veil-strong:   rgba(9, 15, 28, 0.86);
+  --veil-soft:     rgba(9, 15, 28, 0.66);
+  --on-photo:      #eef3fa;
+  --on-photo-mute: #c3cfe0;
 
-  --shadow-sm: 0 1px 2px rgba(12, 13, 15, 0.06), 0 1px 3px rgba(12, 13, 15, 0.04);
-  --shadow-md: 0 4px 12px rgba(12, 13, 15, 0.07), 0 2px 4px rgba(12, 13, 15, 0.04);
-  --shadow-lg: 0 18px 40px rgba(12, 13, 15, 0.12), 0 4px 12px rgba(12, 13, 15, 0.06);
+  --shadow-sm: 0 1px 2px rgba(16, 26, 46, 0.07), 0 1px 3px rgba(16, 26, 46, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 26, 46, 0.09), 0 2px 4px rgba(16, 26, 46, 0.05);
+  --shadow-lg: 0 18px 40px rgba(16, 26, 46, 0.15), 0 4px 12px rgba(16, 26, 46, 0.08);
 
   /* --- Type ------------------------------------------------------------- */
   --font-head: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -109,44 +117,46 @@
 }
 
 /* ============================================================================
-   DARK THEME — deep charcoal with silver text. Never pure black on black.
+   DARK THEME — the blazer navy as the ground, the shirt as the accent.
    ========================================================================== */
 
 :root[data-theme='dark'] {
-  --bg:            #0e0f11;
-  --bg-alt:        #131417;
-  --surface:       #17191c;
-  --surface-2:     #1d2024;
-  --surface-glass: rgba(23, 25, 28, 0.78);
+  --bg:            #0d1526;
+  --bg-alt:        #111a2e;
+  --surface:       #152036;
+  --surface-2:     #1b2843;
+  --surface-glass: rgba(21, 32, 54, 0.78);
 
-  --line:          #262a2f;
-  --line-strong:   #3a3f45;
+  --line:          #24314b;
+  --line-strong:   #3a4a68;
 
-  --ink:           #f1f2f3;
-  --text:          #adb1b7;
-  --muted:         #7d8188;
+  --ink:           #e8eef7;
+  --text:          #b0bdd0;
+  /* 5.36:1 on the ground, 4.78:1 on a card */
+  --muted:         #7e8ca4;
 
-  /* On dark, the "accent" flips to silver-white so buttons still read */
-  --accent:        #e9eaec;
-  --accent-hover:  #ffffff;
-  --accent-soft:   #1f2226;
-  --accent-line:   #3a3f45;
-  --on-accent:     #0c0d0f;
+  /* The navy is the ground here, so the shirt's powder blue becomes the
+     accent — a deep navy accent would vanish into it. */
+  --accent:        #9dc3e8;
+  --accent-hover:  #bbd6f2;
+  --accent-soft:   #16233a;
+  --accent-line:   #3c5271;
+  --on-accent:     #0b1424;
 
-  --metal:         #9ea2a9;
-  --metal-soft:    #1f2226;
+  --metal:         #92a3ba;
+  --metal-soft:    #1b2843;
 
-  --nav-bg:        #08090a;
-  --nav-border:    #1e2124;
-  --nav-text:      #9da1a7;
+  --nav-bg:        #0a1120;
+  --nav-border:    #1d2a42;
+  --nav-text:      #a8b6cd;
   --nav-text-hi:   #ffffff;
 
-  --veil-strong:   rgba(6, 7, 8, 0.88);
-  --veil-soft:     rgba(6, 7, 8, 0.70);
+  --veil-strong:   rgba(5, 9, 18, 0.88);
+  --veil-soft:     rgba(5, 9, 18, 0.70);
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.34);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.38);
-  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.48);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.36);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.50);
 }
 
 /* Note: the site deliberately opens in the light theme above rather than

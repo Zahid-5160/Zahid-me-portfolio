@@ -5,12 +5,13 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { about, profile } from '../data/content.js'
 import Backdrop from '../components/Backdrop.jsx'
 import CountUp from '../components/CountUp.jsx'
+import SectionBumper from '../components/SectionBumper.jsx'
+import WordReveal from '../components/WordReveal.jsx'
 import Magnetic from '../components/Magnetic.jsx'
 import PageTransition from '../components/PageTransition.jsx'
 import Portrait from '../components/Portrait.jsx'
 import Reveal from '../components/Reveal.jsx'
 import SplitText from '../components/SplitText.jsx'
-import Tilt from '../components/Tilt.jsx'
 import { asset } from '../lib/asset.js'
 import { emailHref, emailLinkProps } from '../lib/email.js'
 import { ArrowRight, Download, Github, Linkedin, MapPin } from '../components/Icons.jsx'
@@ -72,11 +73,15 @@ export default function Home() {
               <SplitText text={profile.name} delay={0.18} />
             </h1>
 
-            <motion.p variants={item} className="hero__role">
-              <span>Web Developer</span>
-              <span className="hero__role-dot" aria-hidden />
-              <span>Data Analyst</span>
-            </motion.p>
+            {/* Arrives a word at a time, each one lifting out of the dark
+                roughly two thirds of a second after the last */}
+            <p className="hero__role hero__role--staggered">
+              <WordReveal
+                text="Web Developer · Data Analyst"
+                delay={0.5}
+                stagger={0.7}
+              />
+            </p>
 
             <motion.p variants={item} className="hero__tagline">
               {profile.tagline}
@@ -138,9 +143,11 @@ export default function Home() {
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Tilt className="portrait-tilt" max={7} glare={false}>
+            {/* No tilt on the cut-out: a figure standing in the scene
+                should not skew with the pointer the way a card does. */}
+            <div className="portrait-tilt">
               <Portrait />
-            </Tilt>
+            </div>
           </motion.div>
         </div>
 
@@ -153,7 +160,7 @@ export default function Home() {
       {/* =================================================== STATS ======= */}
       <section className="section section--tight">
         <div className="container container--wide">
-          <Reveal className="stats" from="down">
+          <Reveal className="stats">
             {about.stats.map((stat) => (
               <div className="stat" key={stat.label}>
                 <span className="stat__value">
@@ -172,15 +179,14 @@ export default function Home() {
         <div className="container">
           <div className="about__grid">
             <div className="about__side">
-              <Reveal from="left">
-                <div className="heading-block" style={{ marginBottom: 0 }}>
-                  <span className="eyebrow">About</span>
-                  <h2 className="heading-block__title">{about.heading}</h2>
-                  <p className="lead">{about.lead}</p>
-                </div>
-              </Reveal>
+              <SectionBumper
+                eyebrow="About"
+                title={about.heading}
+                sub={about.lead}
+                align="start"
+              />
 
-              <Reveal from="left" delay={0.12}>
+              <Reveal delay={0.12}>
                 <div className="facts">
                   <div className="fact">
                     <span className="fact__label">Based in</span>
@@ -204,7 +210,7 @@ export default function Home() {
               </Reveal>
             </div>
 
-            <Reveal from="right" delay={0.08}>
+            <Reveal delay={0.08}>
               <div className="about__prose">
                 {about.paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
@@ -228,7 +234,7 @@ export default function Home() {
         <div className="photo-band__veil" />
 
         <div className="container photo-band__content">
-          <Reveal className="cta-band__inner" from="up">
+          <Reveal className="cta-band__inner">
             <span className="eyebrow eyebrow--on-photo">Get in touch</span>
             <h2 className="cta-band__title">Looking for someone who can build it and measure it?</h2>
             <p className="cta-band__text">
