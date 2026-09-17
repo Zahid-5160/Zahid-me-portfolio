@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 
 import { about, profile } from '../data/content.js'
-import Backdrop from '../components/Backdrop.jsx'
+import CinematicBackdrop from '../components/CinematicBackdrop.jsx'
 import CountUp from '../components/CountUp.jsx'
 import SectionBumper from '../components/SectionBumper.jsx'
 import WordReveal from '../components/WordReveal.jsx'
@@ -47,12 +47,7 @@ export default function Home() {
     >
       {/* ==================================================== HERO ======= */}
       <section className="hero">
-        <Backdrop
-          name="hero-towers"
-          className="hero__photo"
-          alt=""
-          priority
-        />
+        <CinematicBackdrop name="hero-towers" priority />
         <Suspense fallback={null}>
           <SceneBackground className="hero__canvas" />
         </Suspense>
@@ -230,7 +225,7 @@ export default function Home() {
 
       {/* ==================================================== CTA ======== */}
       <section className="photo-band cta-band">
-        <Backdrop name="glass-tower" className="photo-band__img" alt="" />
+        <CinematicBackdrop name="glass-tower" />
         <div className="photo-band__veil" />
 
         <div className="container photo-band__content">

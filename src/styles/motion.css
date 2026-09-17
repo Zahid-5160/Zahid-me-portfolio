@@ -401,9 +401,7 @@
    face — and only settles to full colour on hover.
    ------------------------------------------------------------------------ */
 
-.hero__photo,
-.page-hero__img,
-.photo-band__img {
+.cine__img {
   filter: grayscale(1) contrast(1.06) brightness(0.98);
 }
 
@@ -514,7 +512,7 @@
 
 /* The portrait's tilt wrapper takes over the sizing from .portrait */
 .portrait-tilt {
-  width: min(100%, 380px);
+  width: min(100%, 310px);
 }
 
 .portrait-tilt > .portrait {
@@ -523,7 +521,7 @@
 
 @media (max-width: 980px) {
   .portrait-tilt {
-    width: min(100%, 300px);
+    width: min(100%, 240px);
   }
 }
 
@@ -550,23 +548,46 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Ken Burns — every photograph drifts and zooms, slowly and for ever
+   Cinematic photographs — a slow half turn, and back
    ------------------------------------------------------------------------
-   Nothing here is tied to the scroll position. The photographs simply keep
-   moving, which is what stops a full-bleed still from looking like a dead
-   panel. `alternate` sends it back the way it came instead of snapping to
-   the start, so there is never a visible jump.
+   See CinematicBackdrop.jsx, which works out --cine-cover: the enlargement
+   that keeps the corners hidden at every angle of the turn.
    ------------------------------------------------------------------------ */
 
-@keyframes ken-burns {
-  from { transform: scale(1)    translate3d(0, 0, 0); }
-  to   { transform: scale(1.06) translate3d(-1%, -0.8%, 0); }
+.cine {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.hero__photo,
-.page-hero__img,
-.photo-band__img {
-  animation: ken-burns 40s var(--ease-in-out) infinite alternate;
+/* 180° over a minute, then back the same way */
+.cine__turn {
+  /* A square as wide as the section's diagonal, centred on it: the circle
+     the section's corners sweep while turning always fits inside, so the
+     photograph only needs to cover this square, not be blown up further. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--cine-d, 250vmax);
+  height: var(--cine-d, 250vmax);
+  translate: -50% -50%;
+  will-change: rotate;
+  animation: cine-turn 60s var(--ease-in-out) infinite alternate;
+}
+
+.cine__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes cine-turn {
+  from { rotate: 0deg; }
+  to   { rotate: 180deg; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -618,10 +639,9 @@
   .timeline__item:first-child .timeline__dot::after,
   .card--hover:hover::before,
   .btn:hover::after,
-  .hero__photo,
-  .page-hero__img,
-  .photo-band__img {
+  .cine__turn {
     animation: none !important;
+    scale: 1;
   }
 
   .btn:hover,

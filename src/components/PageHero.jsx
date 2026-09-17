@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 
-import Backdrop from './Backdrop.jsx'
+import CinematicBackdrop from './CinematicBackdrop.jsx'
 import SplitText from './SplitText.jsx'
 
 /**
@@ -28,7 +28,7 @@ export default function PageHero({ index, eyebrow, title, subtitle, image }) {
 
   return (
     <section className="page-hero">
-      <Backdrop name={image} className="page-hero__img" alt="" priority />
+      <CinematicBackdrop name={image} priority />
       <div className="page-hero__veil" />
 
       <motion.div
