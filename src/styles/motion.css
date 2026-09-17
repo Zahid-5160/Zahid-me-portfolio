@@ -525,6 +525,12 @@
   }
 }
 
+@media (max-width: 620px) {
+  .portrait-tilt {
+    width: min(100%, 200px);
+  }
+}
+
 /* Cards that tilt need their reveal wrapper to fill the grid cell, so
    neighbouring cards in a row stay the same height. */
 .skill-grid > div,
