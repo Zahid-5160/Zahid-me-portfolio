@@ -84,7 +84,7 @@ export const photo = {
    ------------------------------------------------------------------------ */
 export const about = {
   heading: 'About me',
-  lead: 'Full-stack web developer and data analyst with over two years of professional experience.',
+  lead: 'Full-stack web developer and data analyst with 1.5+ years of professional experience.',
   paragraphs: [
     'I work across both sides of a product. On the front end I build interfaces with JavaScript (ES6+), React and clean, hand-written CSS. On the back end I work with Python, Flask and Django, and connect everything together with REST APIs.',
     'The other half of my work is data. I use Python with Pandas and NumPy to clean messy datasets, then Matplotlib and Seaborn to turn them into charts people can actually act on. I design database schemas in SQLite and MongoDB, write optimised queries, and build ETL pipelines.',
@@ -92,8 +92,8 @@ export const about = {
   ],
   // Small facts shown as a strip under the hero
   stats: [
-    { value: '2', suffix: '+ yr', label: 'Professional experience' },
-    { value: '6', suffix: '+', label: 'Shipped projects' },
+    { value: '1.5', suffix: '+ yr', label: 'Professional experience' },
+    { value: '20', suffix: '+', label: 'Shipped projects' },
     { value: '7.7', suffix: '', label: 'CGPA — B.E. CSE' },
     { value: '1', suffix: 'st', label: 'Battle of Science' },
   ],

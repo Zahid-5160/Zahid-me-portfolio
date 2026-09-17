@@ -98,8 +98,12 @@
   /* --- Shape ------------------------------------------------------------ */
   --r-sm: 5px;
   --r-md: 8px;
-  --r-lg: 14px;
-  --r-xl: 20px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+
+  /* Every section is a rounded panel inset from the window edge */
+  --r-panel: clamp(1.25rem, 2.6vw, 2.25rem);
+  --panel-inset: clamp(0.5rem, 1.2vw, 1rem);
   --r-pill: 999px;
 
   /* --- Layout ----------------------------------------------------------- */

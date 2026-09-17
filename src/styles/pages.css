@@ -820,3 +820,79 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================================
+   ROUNDED PANELS
+   ------------------------------------------------------------------------
+   Every section — the photographic heroes, the content sections, the CTA
+   band and the footer — is a rounded panel set in slightly from the window
+   edge, with a narrow gutter of page ground between one panel and the next.
+   ========================================================================== */
+
+.hero,
+.page-hero,
+.section,
+.photo-band,
+.footer {
+  margin-inline: var(--panel-inset);
+  border-radius: var(--r-panel);
+}
+
+.hero,
+.page-hero {
+  margin-top: var(--panel-inset);
+}
+
+:is(.hero, .page-hero, .section, .photo-band) + :is(.hero, .page-hero, .section, .photo-band) {
+  margin-top: var(--panel-inset);
+}
+
+.section {
+  /* A shade off the ground, and still below the cards inside it in both themes */
+  background: color-mix(in srgb, var(--surface) 40%, var(--bg));
+  border: 1px solid var(--line);
+}
+
+.section--alt {
+  background: var(--bg-alt);
+}
+
+.footer {
+  margin-block: var(--panel-inset);
+  border: 1px solid var(--line);
+}
+
+/* The photographs are clipped to the curve; a soft shadow lifts them off
+   the page ground. */
+.hero,
+.page-hero,
+.photo-band {
+  box-shadow: var(--shadow-md);
+}
+
+/* The navigation bar is a rounded panel too — it floats a gutter below the
+   top of the window and stays there while the page scrolls under it. */
+.nav {
+  inset-block-start: var(--panel-inset);
+  margin: var(--panel-inset) var(--panel-inset) 0;
+  border: 1px solid var(--nav-border);
+  border-radius: var(--r-xl);
+  /* Clips the hairlines and the open mobile menu to the curve. `clip`, not
+     `hidden`, so the bar does not become a scroll container. */
+  overflow: clip;
+  box-shadow: var(--shadow-md);
+}
+
+.nav--scrolled {
+  box-shadow: 0 10px 30px rgba(5, 9, 18, 0.30);
+}
+
+/* Tucking away now has to clear the gutter above the bar as well */
+.nav--tucked {
+  transform: translateY(calc(-100% - var(--panel-inset) - 12px));
+}
+
+/* The page-top hero fills the window below the floating bar and its gutters */
+.hero {
+  min-height: min(calc(100svh - var(--nav-h) - 3 * var(--panel-inset)), 820px);
+}

@@ -42,13 +42,13 @@ export default function Projects() {
   return (
     <PageTransition
       title="Projects"
-      description="Selected projects in web development, data analysis and database design."
+      description="My six best projects in web development, data analysis and database design."
     >
       <PageHero
         index="03 / Projects"
         eyebrow="Selected work"
         title="Projects"
-        subtitle="Six projects that show both sides of what I do — building the product, and understanding the data behind it."
+        subtitle="My six best projects, handpicked from 20+ I have shipped — they show both sides of what I do: building the product, and understanding the data behind it."
         image="glass-tower"
       />
 
