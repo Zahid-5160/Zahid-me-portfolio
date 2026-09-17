@@ -859,7 +859,8 @@
 
 .footer {
   margin-block: var(--panel-inset);
-  border: 1px solid var(--line);
+  border: 1px solid var(--nav-border);
+  box-shadow: var(--shadow-md);
 }
 
 /* The photographs are clipped to the curve; a soft shadow lifts them off

@@ -154,15 +154,6 @@
   white-space: nowrap;
 }
 
-/* The footer reuses .brand, but there it sits on a light background */
-.footer .brand {
-  color: var(--ink);
-}
-
-.footer .brand__role {
-  color: var(--muted);
-}
-
 /* --- Desktop links --- */
 
 .nav__links {
@@ -712,23 +703,83 @@
    ------------------------------------------------------------------------ */
 
 .footer {
-  border-top: 1px solid var(--line);
-  background: var(--bg-alt);
+  /* The same navy as the navigation bar, in both themes, so the page is
+     framed top and bottom by the brand colour. */
+  background: var(--nav-bg);
+  color: var(--nav-text);
   padding-block: var(--sp-8) var(--sp-5);
+  position: relative;
+  overflow: clip;
 }
 
-.footer__grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: var(--sp-7);
-  padding-bottom: var(--sp-7);
+/* Brushed-silver hairline along the top edge, as on the bar */
+.footer::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22) 22%,
+    rgba(255, 255, 255, 0.22) 78%,
+    transparent
+  );
+}
+
+.footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--nav-border);
 }
 
 .footer__tagline {
   font-size: var(--fs-base);
-  color: var(--muted);
-  max-width: 38ch;
-  margin-top: var(--sp-3);
+  color: var(--nav-text);
+  max-width: 44ch;
+  margin-top: var(--sp-4);
+}
+
+.footer__social {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.footer__social-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-md);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--nav-text-hi);
+  transition: background var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              transform var(--t-fast) var(--ease-out);
+}
+
+.footer__social-btn:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #101a2e;
+  transform: translateY(-2px);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
+  gap: var(--sp-6);
+  padding-block: var(--sp-7);
 }
 
 .footer__col-title {
@@ -737,7 +788,16 @@
   font-weight: 700;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--nav-text-hi);
+  margin-bottom: var(--sp-4);
+}
+
+.footer__status {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--nav-text-hi);
   margin-bottom: var(--sp-4);
 }
 
@@ -755,17 +815,22 @@
   align-items: center;
   gap: var(--sp-2);
   font-size: var(--fs-sm);
-  color: var(--text);
+  color: var(--nav-text);
   width: fit-content;
+  overflow-wrap: anywhere;
 }
 
 .footer__link:hover {
-  color: var(--accent);
+  color: var(--nav-text-hi);
+}
+
+.footer__link--plain::after {
+  display: none;
 }
 
 .footer__link svg {
   flex: 0 0 auto;
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 .footer__bottom {
@@ -775,9 +840,37 @@
   justify-content: space-between;
   gap: var(--sp-3);
   padding-top: var(--sp-5);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--nav-border);
   font-size: var(--fs-xs);
-  color: var(--muted);
+  color: var(--nav-text);
+}
+
+.footer__to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nav-text);
+  cursor: pointer;
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+.footer__to-top:hover {
+  color: var(--nav-text-hi);
+}
+
+.footer__to-top-icon {
+  transform: rotate(-90deg);
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+.footer__to-top:hover .footer__to-top-icon {
+  transform: rotate(-90deg) translateX(2px);
 }
 
 /* ---------------------------------------------------------------------------
@@ -788,10 +881,6 @@
   .footer__grid {
     grid-template-columns: 1fr 1fr;
     gap: var(--sp-6);
-  }
-
-  .footer__brand-col {
-    grid-column: 1 / -1;
   }
 }
 
